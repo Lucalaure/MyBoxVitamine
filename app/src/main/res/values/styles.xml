@@ -55,7 +55,7 @@
         <item name="android:textColor">@color/login_green</item>
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:text">VitalFix</item>
+        <item name="android:text">MyBoxVitamine</item>
     </style>
 
     <style name="result_page_title" parent="toolbar_title">

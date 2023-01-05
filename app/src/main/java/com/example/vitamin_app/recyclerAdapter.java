@@ -23,18 +23,14 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHo
     private ArrayList<String> vitamin_names = new ArrayList<>();
     ArrayList<String> vitamin_descriptions = new ArrayList<>();
     ArrayList<String> vitamin_dosages = new ArrayList<>();
-    String episodelinks[];
     ArrayList<Integer> vitamin_img = new ArrayList<>();
     Context context;
-    String draw;
-
 
     public recyclerAdapter(Context aContext, String page_type) throws IllegalAccessException {
         context = aContext;
 
         ArrayList<String[]> str = GeneralListActivity.getDatabaselist();
         for(int i = 0; i < str.size(); i++){
-            String[] temp = str.get(i);
             if(str.get(i)[1].equals(page_type)){
                 vitamin_names.add(str.get(i)[0]);
                 vitamin_descriptions.add(str.get(i)[2]);
@@ -43,38 +39,16 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHo
                 vitamin_img.add(resourceId);
             }
         }
-
-//        vitamin_names = aContext.getResources().getStringArray(R.array.vitamin_names);
-//        vitamin_descriptions = aContext.getResources().getStringArray(R.array.vitamin_descriptions);
-//        episodelinks =  aContext.getResources().getStringArray(R.array.episode_links);
-//        for (int i = 0; i < episodeRatings.length; i++) {
-//            if (GeneralListActivity.sharedPrefs.contains(ratings + i)) {
-////                Log.w("TAG", "MyCustomAdapter: " + i + " " + MainActivity.sharedPrefs.getFloat(ratings + i, 0));
-//                episodeRatings[i] = MainActivity.sharedPrefs.getFloat(ratings + i, 0);
-//            }
-//        }
-
-
-
     }
 
     public  class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imgVitamin;
-//        public TextView tvEpisodeTitle;
         public TextView vitaminDesc;
-        public TextView vitaminName;
-//        public RatingBar tvRatingBar;
-        public Button btnRandom;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.imgVitamin = (ImageView) itemView.findViewById(R.id.imgVitamin);
-//            this.nameVitamin = (TextView) itemView.findViewById(R.id.tvEpisodeTitle);
             this.vitaminDesc = (TextView) itemView.findViewById(R.id.vitaminDesc);
-
-            this.vitaminName = (TextView) itemView.findViewById(R.id.nameVitamin);
-
-//            this.btnRandom = (Button) itemView.findViewById(R.id.btnRandom);
         }
     }
     @Override
@@ -88,18 +62,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.vitaminDesc.setText(vitamin_descriptions.get(position));
-        holder.vitaminName.setText(vitamin_names.get(position));
         holder.imgVitamin.setImageResource(vitamin_img.get(position).intValue());
-//        holder.tvRatingBar.setRating(episodeRatings[position]);
-//        holder.tvEpisodeTitle.setText(vitamin_names[position]);
-//        holder.btnRandom.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(episodelinks[position]));
-////                browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-////                context.startActivity(browserIntent);
-//            }
-//        });
     }
 
     @Override

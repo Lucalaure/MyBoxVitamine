@@ -14,10 +14,6 @@
         android:theme="@style/Theme.Vitamin_App"
         tools:targetApi="31" >
         <activity
-            android:name=".VitaminDetailActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
-        <activity
             android:name=".GeneralListActivity"
             android:screenOrientation="portrait"
             android:exported="false"
