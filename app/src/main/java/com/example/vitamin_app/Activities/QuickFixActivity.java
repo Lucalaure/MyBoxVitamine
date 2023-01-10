@@ -2,17 +2,12 @@ package com.example.vitamin_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -23,18 +18,18 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class GeneralListActivity extends AppCompatActivity {
+public class QuickFixActivity extends AppCompatActivity {
     InputStream inputStream;
     static ArrayList<String[]> databaselist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         inputStream = getResources().openRawResource(R.raw.supplement_sheet_final);
-        VitaminDatabaseHandler vitaminDatabaseHandler = new VitaminDatabaseHandler(GeneralListActivity.this);
+        VitaminDatabaseHandler vitaminDatabaseHandler = new VitaminDatabaseHandler(QuickFixActivity.this);
         inputStream = getResources().openRawResource(R.raw.supplement_sheet_final);
         File file = new File("/data/data/com.example.vitamin_app/databases/vitamin.db");
         file.delete();
-        VitaminDatabaseHandler vitaminDatabaseHelper = new VitaminDatabaseHandler(GeneralListActivity.this);
+        VitaminDatabaseHandler vitaminDatabaseHelper = new VitaminDatabaseHandler(QuickFixActivity.this);
         BufferedInputStream bf = new BufferedInputStream(inputStream);
         BufferedReader reader = new BufferedReader(new InputStreamReader(bf, StandardCharsets.UTF_8));
         String line;
@@ -82,7 +77,7 @@ public class GeneralListActivity extends AppCompatActivity {
         toSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), GeneralListActivity.class);
+                Intent intent = new Intent(view.getContext(), QuickFixActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 view.getContext().startActivity(intent);
             }

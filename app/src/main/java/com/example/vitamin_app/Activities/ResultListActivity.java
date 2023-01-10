@@ -11,6 +11,8 @@ import android.view.View;
 
 import android.widget.ImageButton;
 
+import com.example.vitamin_app.Adapters.ResultListAdapter;
+
 
 public class ResultListActivity extends AppCompatActivity {
     RecyclerView resultDisplay;
@@ -65,7 +67,7 @@ public class ResultListActivity extends AppCompatActivity {
         toSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), GeneralListActivity.class);
+                Intent intent = new Intent(view.getContext(), QuickFixActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 view.getContext().startActivity(intent);
             }

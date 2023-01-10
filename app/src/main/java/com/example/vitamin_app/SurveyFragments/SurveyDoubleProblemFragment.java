@@ -1,4 +1,4 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Survey;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,17 +17,18 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.vitamin_app.ToDoProblemList;
+import com.example.vitamin_app.R;
+import com.example.vitamin_app.ResultListActivity;
+import com.example.vitamin_app.ToDoDatabaseHandler;
+import com.example.vitamin_app.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -192,9 +193,9 @@ public class SurveyDoubleProblemFragment extends Fragment {
                 boolean check = true;
                 db.deleteProblemTasks();
                 int count = 0;
-                if (bundle.getBoolean(Problem.WEIGHT)) {
-                    user.setProblem(Problem.WEIGHT);
-                    db.insertProblemTask(Problem.WEIGHT);
+                if (bundle.getBoolean(ToDoProblemList.WEIGHT)) {
+                    user.setProblem(ToDoProblemList.WEIGHT);
+                    db.insertProblemTask(ToDoProblemList.WEIGHT);
                     RadioButton triple_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem3);
@@ -263,7 +264,7 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         check = false;
                     }
                     count++;
-                } if (bundle.getBoolean(Problem.SLEEP)) {
+                } if (bundle.getBoolean(ToDoProblemList.SLEEP)) {
                     RadioButton triple_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem3);
@@ -281,8 +282,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         }
                     }
                     if (count == 0) {
-                        user.setProblem(Problem.SLEEP);
-                        db.insertProblemTask(Problem.SLEEP);
+                        user.setProblem(ToDoProblemList.SLEEP);
+                        db.insertProblemTask(ToDoProblemList.SLEEP);
                         if (triple_p1.isChecked()) {
                             if (seek1.getProgress() == 1) {
                                 user.setSupplement1(vit1);
@@ -323,8 +324,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                             check = false;
                         }
                     } else {
-                        user.setProblem2(Problem.SLEEP);
-                        db.insertProblemTask(Problem.SLEEP);
+                        user.setProblem2(ToDoProblemList.SLEEP);
+                        db.insertProblemTask(ToDoProblemList.SLEEP);
                         if (triple_p1.isChecked()) {
                             if (seek2.getProgress() == 1) {
                                 user.setSupplement4(vit1);
@@ -366,7 +367,7 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         }
                     }
                     count++;
-                } if (bundle.getBoolean(Problem.ENERGY)) {
+                } if (bundle.getBoolean(ToDoProblemList.ENERGY)) {
                     RadioButton double_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem1);
                     if (double_p1.isChecked()) {
                         if (age.equals("60+")) {
@@ -387,8 +388,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                     }
                     if (!age.equals("20-60")) {
                         if (count == 0) {
-                            user.setProblem(Problem.ENERGY);
-                            db.insertProblemTask(Problem.ENERGY);
+                            user.setProblem(ToDoProblemList.ENERGY);
+                            db.insertProblemTask(ToDoProblemList.ENERGY);
                             if (double_p1.isChecked()) {
                                 if (seek1.getProgress() == 1) {
                                     user.setSupplement1(vit1);
@@ -405,8 +406,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                                 check = false;
                             }
                         } else {
-                            user.setProblem2(Problem.ENERGY);
-                            db.insertProblemTask(Problem.ENERGY);
+                            user.setProblem2(ToDoProblemList.ENERGY);
+                            db.insertProblemTask(ToDoProblemList.ENERGY);
                             if (double_p1.isChecked()) {
                                 if (seek2.getProgress() == 1) {
                                     user.setSupplement4(vit1);
@@ -426,8 +427,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                     } else {
                         RadioButton double_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem2);
                         if (count == 0) {
-                            user.setProblem(Problem.ENERGY);
-                            db.insertProblemTask(Problem.ENERGY);
+                            user.setProblem(ToDoProblemList.ENERGY);
+                            db.insertProblemTask(ToDoProblemList.ENERGY);
                             if (double_p1.isChecked()) {
                                 if (seek1.getProgress() == 1) {
                                     user.setSupplement1("Guarana");
@@ -455,8 +456,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                                 check = false;
                             }
                         } else {
-                            user.setProblem2(Problem.ENERGY);
-                            db.insertProblemTask(Problem.ENERGY);
+                            user.setProblem2(ToDoProblemList.ENERGY);
+                            db.insertProblemTask(ToDoProblemList.ENERGY);
                             if (double_p1.isChecked()) {
                                 if (seek2.getProgress() == 1) {
                                     user.setSupplement4("Guarana");
@@ -486,7 +487,7 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         }
                     }
                     count++;
-                } if (bundle.getBoolean(Problem.IMMUNITY)) {
+                } if (bundle.getBoolean(ToDoProblemList.IMMUNITY)) {
                     RadioButton double_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem2);
                     if (double_p1.isChecked()) {
@@ -501,8 +502,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         }
                     }
                     if (count == 0) {
-                        user.setProblem(Problem.IMMUNITY);
-                        db.insertProblemTask(Problem.IMMUNITY);
+                        user.setProblem(ToDoProblemList.IMMUNITY);
+                        db.insertProblemTask(ToDoProblemList.IMMUNITY);
                         if (double_p1.isChecked()) {
                             if (seek1.getProgress() == 1) {
                                 user.setSupplement1(vit1);
@@ -530,8 +531,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                             check = false;
                         }
                     } else {
-                        user.setProblem2(Problem.IMMUNITY);
-                        db.insertProblemTask(Problem.IMMUNITY);
+                        user.setProblem2(ToDoProblemList.IMMUNITY);
+                        db.insertProblemTask(ToDoProblemList.IMMUNITY);
                         if (double_p1.isChecked()) {
                             if (seek2.getProgress() == 1) {
                                 user.setSupplement4(vit1);
@@ -560,7 +561,7 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         }
                     }
                     count++;
-                } if (bundle.getBoolean(Problem.SKIN)) {
+                } if (bundle.getBoolean(ToDoProblemList.SKIN)) {
                     RadioButton triple_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem3);
@@ -575,8 +576,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         }
                     }
                     if (count == 0) {
-                        user.setProblem(Problem.SKIN);
-                        db.insertProblemTask(Problem.SKIN);
+                        user.setProblem(ToDoProblemList.SKIN);
+                        db.insertProblemTask(ToDoProblemList.SKIN);
                         if (triple_p1.isChecked()) {
                             if (seek1.getProgress() == 1) {
                                 user.setSupplement1(vit1);
@@ -615,8 +616,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                             check = false;
                         }
                     } else {
-                        user.setProblem2(Problem.SKIN);
-                        db.insertProblemTask(Problem.SKIN);
+                        user.setProblem2(ToDoProblemList.SKIN);
+                        db.insertProblemTask(ToDoProblemList.SKIN);
                         if (triple_p1.isChecked()) {
                             if (seek2.getProgress() == 1) {
                                 user.setSupplement4(vit1);
@@ -656,13 +657,13 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         }
                     }
                     count++;
-                } if (bundle.getBoolean(Problem.DETOX)) {
+                } if (bundle.getBoolean(ToDoProblemList.DETOX)) {
                     RadioButton triple_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem3);
                     if (count == 0) {
-                        user.setProblem(Problem.DETOX);
-                        db.insertProblemTask(Problem.DETOX);
+                        user.setProblem(ToDoProblemList.DETOX);
+                        db.insertProblemTask(ToDoProblemList.DETOX);
                         if (triple_p1.isChecked()) {
                             if (seek1.getProgress() == 1) {
                                 user.setSupplement1("Chlorella");
@@ -701,8 +702,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                             check = false;
                         }
                     } else {
-                        user.setProblem2(Problem.DETOX);
-                        db.insertProblemTask(Problem.DETOX);
+                        user.setProblem2(ToDoProblemList.DETOX);
+                        db.insertProblemTask(ToDoProblemList.DETOX);
                         if (triple_p1.isChecked()) {
                             if (seek2.getProgress() == 1) {
                                 user.setSupplement4("Chlorella");
@@ -742,12 +743,12 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         }
                     }
                     count++;
-                } if (bundle.getBoolean(Problem.EXERCISE)) {
+                } if (bundle.getBoolean(ToDoProblemList.EXERCISE)) {
                     RadioButton double_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem2);
                     if (count == 0) {
-                        user.setProblem(Problem.EXERCISE);
-                        db.insertProblemTask(Problem.EXERCISE);
+                        user.setProblem(ToDoProblemList.EXERCISE);
+                        db.insertProblemTask(ToDoProblemList.EXERCISE);
                         if (double_p1.isChecked()) {
                             if (seek1.getProgress() == 1) {
                                 user.setSupplement1("L-Carnitine");
@@ -775,8 +776,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                             check = false;
                         }
                     } else {
-                        user.setProblem2(Problem.EXERCISE);
-                        db.insertProblemTask(Problem.EXERCISE);
+                        user.setProblem2(ToDoProblemList.EXERCISE);
+                        db.insertProblemTask(ToDoProblemList.EXERCISE);
                         if (double_p1.isChecked()) {
                             if (seek2.getProgress() == 1) {
                                 user.setSupplement4("L-Carnitine");
@@ -805,13 +806,11 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         }
                     }
                     count++;
-                } if (bundle.getBoolean(Problem.DIGESTION)) {
+                } if (bundle.getBoolean(ToDoProblemList.DIGESTION)) {
                     RadioButton double_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem2);
                     if (double_p1.isChecked()) {
                         if (!age.equals("20-60")) {
-                            /////////////////////////////////////////////////////////////////////////////////////
-                            // Might need to change
                             vit1 = "Fennel";
                             vit2 = "Coriander";
                             vit3 = "Propolis";
@@ -822,8 +821,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         }
                     }
                     if (count == 0) {
-                        user.setProblem(Problem.DIGESTION);
-                        db.insertProblemTask(Problem.DIGESTION);
+                        user.setProblem(ToDoProblemList.DIGESTION);
+                        db.insertProblemTask(ToDoProblemList.DIGESTION);
                         if (double_p1.isChecked()) {
                             if (seek1.getProgress() == 1) {
                                 user.setSupplement1(vit1);
@@ -851,8 +850,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                             check = false;
                         }
                     } else {
-                        user.setProblem2(Problem.DIGESTION);
-                        db.insertProblemTask(Problem.DIGESTION);
+                        user.setProblem2(ToDoProblemList.DIGESTION);
+                        db.insertProblemTask(ToDoProblemList.DIGESTION);
                         if (double_p1.isChecked()) {
                             if (seek2.getProgress() == 1) {
                                 user.setSupplement4(vit1);
@@ -881,20 +880,18 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         }
                     }
                     count++;
-                } if (bundle.getBoolean(Problem.ARTICULATION)) {
+                } if (bundle.getBoolean(ToDoProblemList.ARTICULATION)) {
                     RadioButton double_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem2);
                     if (double_p1.isChecked()) {
-                        //////////////////////////////////////////////////////////////////////////////////////////////////
-                        // Might need to change
                         if (age.equals("60+")) {
                             vit1 = "Collagen";
                             vit2 = "Silica";
                             vit3 = "Boswellia";
                         } else if (age.equals("12-20")) {
-                            vit1 = "Borage";
-                            vit2 = "Boswellia";
-                            vit3 = "Collagen";
+                            vit1 = "Boswellia";
+                            vit2 = "Borage";
+                            vit3 = "Fermented Papaya";
                         } else {
                             vit3 = "Fermented Papaya";
                             vit1 = "Boswellia";
@@ -912,8 +909,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                         }
                     }
                     if (count == 0) {
-                        user.setProblem(Problem.ARTICULATION);
-                        db.insertProblemTask(Problem.ARTICULATION);
+                        user.setProblem(ToDoProblemList.ARTICULATION);
+                        db.insertProblemTask(ToDoProblemList.ARTICULATION);
                         if (double_p1.isChecked()) {
                             if (seek1.getProgress() == 1) {
                                 user.setSupplement1(vit1);
@@ -941,8 +938,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
                             check = false;
                         }
                     } else {
-                        user.setProblem2(Problem.ARTICULATION);
-                        db.insertProblemTask(Problem.ARTICULATION);
+                        user.setProblem2(ToDoProblemList.ARTICULATION);
+                        db.insertProblemTask(ToDoProblemList.ARTICULATION);
                         if (double_p1.isChecked()) {
                             if (seek2.getProgress() == 1) {
                                 user.setSupplement4(vit1);

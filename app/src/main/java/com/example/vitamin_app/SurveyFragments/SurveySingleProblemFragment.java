@@ -1,4 +1,4 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Survey;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,19 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.vitamin_app.ToDoProblemList;
+import com.example.vitamin_app.R;
+import com.example.vitamin_app.ResultListActivity;
+import com.example.vitamin_app.ToDoDatabaseHandler;
+import com.example.vitamin_app.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class SurveySingleProblemFragment extends Fragment {
 
@@ -113,9 +115,9 @@ public class SurveySingleProblemFragment extends Fragment {
                 // Accounts for both age and gender of the user
                 boolean check = true;
                 db.deleteProblemTasks();
-                if (bundle.getBoolean(Problem.WEIGHT)) {
-                    user.setProblem(Problem.WEIGHT);
-                    db.insertProblemTask(Problem.WEIGHT);
+                if (bundle.getBoolean(ToDoProblemList.WEIGHT)) {
+                    user.setProblem(ToDoProblemList.WEIGHT);
+                    db.insertProblemTask(ToDoProblemList.WEIGHT);
                     RadioButton triple_p1 = (RadioButton) triple.getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) triple.getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) triple.getView().findViewById(R.id.triple_problem3);
@@ -142,9 +144,9 @@ public class SurveySingleProblemFragment extends Fragment {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
-                } else if (bundle.getBoolean(Problem.SLEEP)) {
-                    user.setProblem(Problem.SLEEP);
-                    db.insertProblemTask(Problem.SLEEP);
+                } else if (bundle.getBoolean(ToDoProblemList.SLEEP)) {
+                    user.setProblem(ToDoProblemList.SLEEP);
+                    db.insertProblemTask(ToDoProblemList.SLEEP);
                     RadioButton triple_p1 = (RadioButton) triple.getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) triple.getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) triple.getView().findViewById(R.id.triple_problem3);
@@ -173,9 +175,9 @@ public class SurveySingleProblemFragment extends Fragment {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
-                } else if (bundle.getBoolean(Problem.ENERGY)) {
-                    user.setProblem(Problem.ENERGY);
-                    db.insertProblemTask(Problem.ENERGY);
+                } else if (bundle.getBoolean(ToDoProblemList.ENERGY)) {
+                    user.setProblem(ToDoProblemList.ENERGY);
+                    db.insertProblemTask(ToDoProblemList.ENERGY);
                     if (!age.equals("20-60")) {
                         RadioButton double_p1 = (RadioButton) single.getView().findViewById(R.id.double_problem1);
                         if (double_p1.isChecked()) {
@@ -209,9 +211,9 @@ public class SurveySingleProblemFragment extends Fragment {
                             check = false;
                         }
                     }
-                } else if (bundle.getBoolean(Problem.IMMUNITY)) {
-                    user.setProblem(Problem.IMMUNITY);
-                    db.insertProblemTask(Problem.IMMUNITY);
+                } else if (bundle.getBoolean(ToDoProblemList.IMMUNITY)) {
+                    user.setProblem(ToDoProblemList.IMMUNITY);
+                    db.insertProblemTask(ToDoProblemList.IMMUNITY);
                     RadioButton double_p1 = (RadioButton) doublle.getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) doublle.getView().findViewById(R.id.double_problem2);
                     if (double_p1.isChecked()) {
@@ -228,9 +230,9 @@ public class SurveySingleProblemFragment extends Fragment {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
-                } else if (bundle.getBoolean(Problem.SKIN)) {
-                    user.setProblem(Problem.SKIN);
-                    db.insertProblemTask(Problem.SKIN);
+                } else if (bundle.getBoolean(ToDoProblemList.SKIN)) {
+                    user.setProblem(ToDoProblemList.SKIN);
+                    db.insertProblemTask(ToDoProblemList.SKIN);
                     RadioButton triple_p1 = (RadioButton) triple.getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) triple.getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) triple.getView().findViewById(R.id.triple_problem3);
@@ -253,9 +255,9 @@ public class SurveySingleProblemFragment extends Fragment {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
-                } else if (bundle.getBoolean(Problem.DETOX)) {
-                    user.setProblem(Problem.DETOX);
-                    db.insertProblemTask(Problem.DETOX);
+                } else if (bundle.getBoolean(ToDoProblemList.DETOX)) {
+                    user.setProblem(ToDoProblemList.DETOX);
+                    db.insertProblemTask(ToDoProblemList.DETOX);
                     RadioButton triple_p1 = (RadioButton) triple.getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) triple.getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) triple.getView().findViewById(R.id.triple_problem3);
@@ -278,9 +280,9 @@ public class SurveySingleProblemFragment extends Fragment {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
-                } else if (bundle.getBoolean(Problem.EXERCISE)) {
-                    user.setProblem(Problem.EXERCISE);
-                    db.insertProblemTask(Problem.EXERCISE);
+                } else if (bundle.getBoolean(ToDoProblemList.EXERCISE)) {
+                    user.setProblem(ToDoProblemList.EXERCISE);
+                    db.insertProblemTask(ToDoProblemList.EXERCISE);
                     RadioButton double_p1 = (RadioButton) doublle.getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) doublle.getView().findViewById(R.id.double_problem2);
                     if (double_p1.isChecked()) {
@@ -297,9 +299,9 @@ public class SurveySingleProblemFragment extends Fragment {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
-                } else if (bundle.getBoolean(Problem.DIGESTION)) {
-                    user.setProblem(Problem.DIGESTION);
-                    db.insertProblemTask(Problem.DIGESTION);
+                } else if (bundle.getBoolean(ToDoProblemList.DIGESTION)) {
+                    user.setProblem(ToDoProblemList.DIGESTION);
+                    db.insertProblemTask(ToDoProblemList.DIGESTION);
                     RadioButton double_p1 = (RadioButton) doublle.getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) doublle.getView().findViewById(R.id.double_problem2);
                     if (double_p1.isChecked()) {
@@ -320,9 +322,9 @@ public class SurveySingleProblemFragment extends Fragment {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
-                } else if (bundle.getBoolean(Problem.ARTICULATION)) {
-                    user.setProblem(Problem.ARTICULATION);
-                    db.insertProblemTask(Problem.ARTICULATION);
+                } else if (bundle.getBoolean(ToDoProblemList.ARTICULATION)) {
+                    user.setProblem(ToDoProblemList.ARTICULATION);
+                    db.insertProblemTask(ToDoProblemList.ARTICULATION);
                     RadioButton double_p1 = (RadioButton) doublle.getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) doublle.getView().findViewById(R.id.double_problem2);
                     if (double_p1.isChecked()) {

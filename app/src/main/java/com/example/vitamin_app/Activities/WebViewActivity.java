@@ -9,7 +9,7 @@ import android.webkit.WebViewClient;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class webView extends AppCompatActivity {
+public class WebViewActivity extends AppCompatActivity {
     Toolbar toolbar;
     WebView webView;
 

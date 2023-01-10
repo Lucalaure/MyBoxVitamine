@@ -32,11 +32,11 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class QuickFixList extends Fragment {
+public class QuickFixFragment extends Fragment {
     AutoCompleteTextView autocomplete;
     ArrayAdapter adapterItems;
 
-    public QuickFixList() {
+    public QuickFixFragment() {
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
