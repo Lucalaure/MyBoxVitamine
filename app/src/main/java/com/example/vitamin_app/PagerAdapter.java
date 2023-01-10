@@ -1,11 +1,11 @@
 package com.example.vitamin_app;
 
-import android.content.Intent;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.example.vitamin_app.Fragments.NewsFragment;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
@@ -22,11 +22,11 @@ public class PagerAdapter extends FragmentPagerAdapter {
         switch (position)
         {
             case 0:
-                return new HealthFragment();
+                return new NewsFragment();
             case 1:
-                return new HealthFragment();
+                return new NewsFragment();
             case 2:
-                return new HealthFragment();
+                return new NewsFragment();
 
             default:
                 return null;

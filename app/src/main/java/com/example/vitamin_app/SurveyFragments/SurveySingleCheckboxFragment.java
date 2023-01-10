@@ -1,4 +1,4 @@
-package com.example.vitamin_app.Survey;
+package com.example.vitamin_app.SurveyFragments;
 
 import android.os.Bundle;
 

@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.vitamin_app.R;
-import com.example.vitamin_app.recyclerAdapter;
+import com.example.vitamin_app.Adapters.QuickFixAdapter;
 
 public class QuickFixOptionsSkin extends Fragment {
     public QuickFixOptionsSkin() {
@@ -24,7 +24,7 @@ public class QuickFixOptionsSkin extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         RecyclerView.Adapter rvAdapter = null;
         try {
-            rvAdapter = new recyclerAdapter(this.getContext(), "Skin");
+            rvAdapter = new QuickFixAdapter(this.getContext(), "Skin");
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

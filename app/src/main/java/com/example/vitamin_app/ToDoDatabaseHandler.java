@@ -4,10 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.example.vitamin_app.Model.ToDoModel;
 import androidx.annotation.Nullable;
@@ -126,41 +124,41 @@ public class ToDoDatabaseHandler extends SQLiteOpenHelper {
     //Given a problem, insert the related tasks associated with it into the database.
     public void insertProblemTask(String problem){
         switch (problem){
-            case Problem.WEIGHT:
-                insertTask(Problem.WEIGHTTASK1);
-                insertTask(Problem.WEIGHTTASK2);
+            case ToDoProblemList.WEIGHT:
+                insertTask(ToDoProblemList.WEIGHTTASK1);
+                insertTask(ToDoProblemList.WEIGHTTASK2);
                 break;
-            case Problem.SLEEP:
-                insertTask(Problem.SLEEPTASK1);
-                insertTask(Problem.SLEEPTASK2);
+            case ToDoProblemList.SLEEP:
+                insertTask(ToDoProblemList.SLEEPTASK1);
+                insertTask(ToDoProblemList.SLEEPTASK2);
                 break;
-            case Problem.ENERGY:
-                insertTask(Problem.ENERGYTASK1);
-                insertTask(Problem.ENERGYTASK2);
+            case ToDoProblemList.ENERGY:
+                insertTask(ToDoProblemList.ENERGYTASK1);
+                insertTask(ToDoProblemList.ENERGYTASK2);
                 break;
-            case Problem.IMMUNITY:
-                insertTask(Problem.IMMUNITYTASK1);
-                insertTask(Problem.IMMUNITYTASK2);
+            case ToDoProblemList.IMMUNITY:
+                insertTask(ToDoProblemList.IMMUNITYTASK1);
+                insertTask(ToDoProblemList.IMMUNITYTASK2);
                 break;
-            case Problem.SKIN:
-                insertTask(Problem.SKINTASK1);
-                insertTask(Problem.SKINTASK2);
+            case ToDoProblemList.SKIN:
+                insertTask(ToDoProblemList.SKINTASK1);
+                insertTask(ToDoProblemList.SKINTASK2);
                 break;
-            case Problem.DETOX:
-                insertTask(Problem.DETOXTASK1);
-                insertTask(Problem.DETOXTASK2);
+            case ToDoProblemList.DETOX:
+                insertTask(ToDoProblemList.DETOXTASK1);
+                insertTask(ToDoProblemList.DETOXTASK2);
                 break;
-            case Problem.EXERCISE:
-                insertTask(Problem.EXERCISETASK1);
-                insertTask(Problem.EXERCISETASK2);
+            case ToDoProblemList.EXERCISE:
+                insertTask(ToDoProblemList.EXERCISETASK1);
+                insertTask(ToDoProblemList.EXERCISETASK2);
                 break;
-            case Problem.DIGESTION:
-                insertTask(Problem.DIGESTIONTASK1);
-                insertTask(Problem.DIGESTIONTASK2);
+            case ToDoProblemList.DIGESTION:
+                insertTask(ToDoProblemList.DIGESTIONTASK1);
+                insertTask(ToDoProblemList.DIGESTIONTASK2);
                 break;
-            case Problem.ARTICULATION:
-                insertTask(Problem.ARTICULATIONTASK1);
-                insertTask(Problem.ARTICULATIONTASK2);
+            case ToDoProblemList.ARTICULATION:
+                insertTask(ToDoProblemList.ARTICULATIONTASK1);
+                insertTask(ToDoProblemList.ARTICULATIONTASK2);
                 break;
         }
     }
@@ -174,7 +172,7 @@ public class ToDoDatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void deleteProblemTasks(){
-        for (String task : Problem.PROBLEMTASKLIST) {
+        for (String task : ToDoProblemList.PROBLEMTASKLIST) {
             db.delete(TODO_TABLE, "task=?", new String[]{task});
         }
     }

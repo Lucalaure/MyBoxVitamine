@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.vitamin_app.R;
-import com.example.vitamin_app.recyclerAdapter;
+import com.example.vitamin_app.Adapters.QuickFixAdapter;
 
 public class QuickFixOptionsArticulation extends Fragment {
     public QuickFixOptionsArticulation() {
@@ -23,7 +23,7 @@ public class QuickFixOptionsArticulation extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         RecyclerView.Adapter rvAdapter = null;
         try {
-            rvAdapter = new recyclerAdapter(this.getContext(),"Articulation");
+            rvAdapter = new QuickFixAdapter(this.getContext(),"Articulation");
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

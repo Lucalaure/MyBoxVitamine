@@ -14,26 +14,26 @@
         android:theme="@style/Theme.Vitamin_App"
         tools:targetApi="31" >
         <activity
-            android:name=".GeneralListActivity"
+            android:name=".Activities.QuickFixActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".ResultListActivity"
+            android:name=".Activities.ResultListActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".HomeActivity"
+            android:name=".Activities.HomeActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".webView"
+            android:name=".Activities.WebViewActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:screenOrientation="portrait"
             android:exported="true" >
             <intent-filter>

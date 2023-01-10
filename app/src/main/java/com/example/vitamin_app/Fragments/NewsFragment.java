@@ -1,4 +1,4 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.vitamin_app.Adapters.NewsAdapter;
+import com.example.vitamin_app.ApiUtilites;
+import com.example.vitamin_app.MainNews;
 import com.example.vitamin_app.Model.NewsModel;
+import com.example.vitamin_app.R;
 
 import java.util.ArrayList;
 

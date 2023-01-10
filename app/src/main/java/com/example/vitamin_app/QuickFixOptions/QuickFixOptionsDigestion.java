@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.vitamin_app.R;
-import com.example.vitamin_app.recyclerAdapter;
+import com.example.vitamin_app.Adapters.QuickFixAdapter;
 
 public class QuickFixOptionsDigestion extends Fragment {
     public QuickFixOptionsDigestion() {
@@ -26,7 +26,7 @@ public class QuickFixOptionsDigestion extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         RecyclerView.Adapter rvAdapter = null;
         try {
-            rvAdapter = new recyclerAdapter(this.getContext(), "Digestion");
+            rvAdapter = new QuickFixAdapter(this.getContext(), "Digestion");
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

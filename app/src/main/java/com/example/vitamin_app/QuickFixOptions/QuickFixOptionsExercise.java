@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.vitamin_app.R;
-import com.example.vitamin_app.recyclerAdapter;
+import com.example.vitamin_app.Adapters.QuickFixAdapter;
 
 public class QuickFixOptionsExercise extends Fragment {
     public QuickFixOptionsExercise() {
@@ -30,7 +30,7 @@ public class QuickFixOptionsExercise extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         RecyclerView.Adapter rvAdapter = null;
         try {
-            rvAdapter = new recyclerAdapter(this.getContext(), "Exercise");
+            rvAdapter = new QuickFixAdapter(this.getContext(), "Exercise");
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

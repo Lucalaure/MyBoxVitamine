@@ -1,24 +1,21 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Adapters;
 import static android.app.PendingIntent.getActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Field;
+import com.example.vitamin_app.Activities.QuickFixActivity;
+import com.example.vitamin_app.R;
+
 import java.util.ArrayList;
-public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHolder>{
+public class QuickFixAdapter extends RecyclerView.Adapter<QuickFixAdapter.ViewHolder>{
 
     private ArrayList<String> vitamin_names = new ArrayList<>();
     ArrayList<String> vitamin_descriptions = new ArrayList<>();
@@ -26,10 +23,10 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHo
     ArrayList<Integer> vitamin_img = new ArrayList<>();
     Context context;
 
-    public recyclerAdapter(Context aContext, String page_type) throws IllegalAccessException {
+    public QuickFixAdapter(Context aContext, String page_type) throws IllegalAccessException {
         context = aContext;
 
-        ArrayList<String[]> str = GeneralListActivity.getDatabaselist();
+        ArrayList<String[]> str = QuickFixActivity.getDatabaselist();
         for(int i = 0; i < str.size(); i++){
             if(str.get(i)[1].equals(page_type)){
                 vitamin_names.add(str.get(i)[0]);

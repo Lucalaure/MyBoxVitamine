@@ -1,6 +1,6 @@
 package com.example.vitamin_app;
 
-public class Problem {
+public class ToDoProblemList {
     public static final String WEIGHT = "Weight";
     public static final String SLEEP = "Sleep";
     public static final String ENERGY = "Energy";

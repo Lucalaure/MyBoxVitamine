@@ -1,4 +1,4 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,17 +13,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.vitamin_app.Model.NewsModel;
+import com.example.vitamin_app.R;
+import com.example.vitamin_app.Activities.WebViewActivity;
 
 import java.util.ArrayList;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<ModelClass> modelClassArrayList;
+    ArrayList<NewsModel> newsModelArrayList;
 
-    public Adapter(Context context, ArrayList<ModelClass> modelClassArrayList) {
+    public NewsAdapter(Context context, ArrayList<NewsModel> newsModelArrayList) {
         this.context = context;
-        this.modelClassArrayList = modelClassArrayList;
+        this.newsModelArrayList = newsModelArrayList;
     }
 
     // Create a new view, which defines the UI of the list item.
@@ -40,20 +43,20 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.imageView.setOnClickListener(v -> {
-            Intent intent=new Intent(context,webView.class);
-            intent.putExtra("url",modelClassArrayList.get(position).getUrl());
+            Intent intent=new Intent(context, WebViewActivity.class);
+            intent.putExtra("url", newsModelArrayList.get(position).getUrl());
             context.startActivity(intent);
         });
 
-        holder.mheading.setText(modelClassArrayList.get(position).getTitle());
-        Glide.with(context).load(modelClassArrayList.get(position).getUrlToImage()).into(holder.imageView);
+        holder.mheading.setText(newsModelArrayList.get(position).getTitle());
+        Glide.with(context).load(newsModelArrayList.get(position).getUrlToImage()).into(holder.imageView);
 
     }
 
     // Return the size of your dataset
     @Override
     public int getItemCount() {
-        return modelClassArrayList.size();
+        return newsModelArrayList.size();
     }
 
     // Provide a reference to the views for each data item.

@@ -1,4 +1,4 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -22,6 +22,7 @@ import com.example.vitamin_app.QuickFixOptions.QuickFixOptionsImmunity;
 import com.example.vitamin_app.QuickFixOptions.QuickFixOptionsSkin;
 import com.example.vitamin_app.QuickFixOptions.QuickFixOptionsSleep;
 import com.example.vitamin_app.QuickFixOptions.QuickFixOptionsWeightloss;
+import com.example.vitamin_app.R;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

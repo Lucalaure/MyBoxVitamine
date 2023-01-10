@@ -2,10 +2,8 @@ package com.example.vitamin_app;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,21 +12,17 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.vitamin_app.Fragments.CalendarDialogFragment;
+import com.example.vitamin_app.Fragments.ProfileFragment;
 import com.example.vitamin_app.Model.ToDoModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Objects;
 
 public class AddNewTask extends BottomSheetDialogFragment {
 

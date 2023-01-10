@@ -1,7 +1,7 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Model;
 
 //Object to hold article information from News-API
-public class ModelClass {
+public class NewsModel {
 
     //Store article title, url, and url to article image.
     private String title;
@@ -9,7 +9,7 @@ public class ModelClass {
     private String urlToImage;
 
     // Create a simple Model Class for the Articles.
-    public ModelClass(String author, String title, String description, String url, String urlToImage, String publishedAt) {
+    public NewsModel(String author, String title, String description, String url, String urlToImage, String publishedAt) {
         this.title = title;
         this.url = url;
         this.urlToImage = urlToImage;

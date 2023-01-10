@@ -1,20 +1,22 @@
 package com.example.vitamin_app;
 
+import com.example.vitamin_app.Model.NewsModel;
+
 import java.util.ArrayList;
 
-public class mainNews {
+public class MainNews {
 
     private String status;
     private  String totalResult;
-    private ArrayList<ModelClass> articles;
+    private ArrayList<NewsModel> articles;
 
-    public mainNews(String status, String totalResult, ArrayList<ModelClass> articles) {
+    public MainNews(String status, String totalResult, ArrayList<NewsModel> articles) {
         this.status = status;
         this.totalResult = totalResult;
         this.articles = articles;
     }
 
-    public ArrayList<ModelClass> getArticles() {
+    public ArrayList<NewsModel> getArticles() {
         return articles;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.vitamin_app.Adapters.ResultListAdapter;
+import com.example.vitamin_app.R;
 
 
 public class ResultListActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Fragments;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -13,7 +13,6 @@ import androidx.fragment.app.DialogFragment;
 
 import android.provider.CalendarContract;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,7 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.android.material.timepicker.MaterialTimePicker;
-import com.google.android.material.timepicker.TimeFormat;
+import com.example.vitamin_app.R;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;

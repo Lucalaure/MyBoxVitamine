@@ -1,8 +1,7 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vitamin_app.R;
+import com.example.vitamin_app.Activities.WebViewActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -86,7 +86,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Vi
                     }
                     else{
                         // result available, search for info on passed vitamin
-                        Intent intent = new Intent(view.getContext(), webView.class);
+                        Intent intent = new Intent(view.getContext(), WebViewActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         intent.putExtra("url", GOOGLE_SEARCH_URL + vit_name);
                         view.getContext().startActivity(intent);

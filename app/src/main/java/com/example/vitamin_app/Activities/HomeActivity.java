@@ -1,4 +1,4 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,7 +11,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-import com.example.vitamin_app.Survey.SurveyAgeGenderConfirmFragment;
+import com.example.vitamin_app.PagerAdapter;
+import com.example.vitamin_app.Fragments.ProfileFragment;
+import com.example.vitamin_app.R;
+import com.example.vitamin_app.SurveyFragments.SurveyAgeGenderConfirmFragment;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 

@@ -1,4 +1,4 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -6,22 +6,24 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.vitamin_app.Activities.LoginActivity;
 import com.example.vitamin_app.Adapters.ToDoAdapter;
+import com.example.vitamin_app.AddNewTask;
 import com.example.vitamin_app.Model.ToDoModel;
+import com.example.vitamin_app.R;
+import com.example.vitamin_app.RecyclerItemTouchHelper;
+import com.example.vitamin_app.ToDoDatabaseHandler;
+import com.example.vitamin_app.Users;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -31,15 +33,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.Collections;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {

@@ -1,4 +1,4 @@
-package com.example.vitamin_app.Survey;
+package com.example.vitamin_app.SurveyFragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.vitamin_app.ToDoProblemList;
 import com.example.vitamin_app.R;
-import com.example.vitamin_app.ResultListActivity;
+import com.example.vitamin_app.Activities.ResultListActivity;
 import com.example.vitamin_app.ToDoDatabaseHandler;
 import com.example.vitamin_app.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
