@@ -22,6 +22,7 @@ import com.example.vitamin_app.R;
 import com.example.vitamin_app.Activities.ResultListActivity;
 import com.example.vitamin_app.ToDoDatabaseHandler;
 import com.example.vitamin_app.Users;
+import com.example.vitamin_app.VitaminRecDatabaseHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +31,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class SurveyDoubleProblemFragment extends Fragment {
@@ -71,6 +79,9 @@ public class SurveyDoubleProblemFragment extends Fragment {
 
     ArrayList<Fragment> array = new ArrayList<Fragment>();
 
+    InputStream inputStream;
+    static ArrayList<String[]> databaselist;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +115,6 @@ public class SurveyDoubleProblemFragment extends Fragment {
         SeekBar seek1 = (SeekBar) v.findViewById(R.id.seekBar);
         SeekBar seek2 = (SeekBar) v.findViewById(R.id.seekBar2);
 
-
         // Retrieving user data from firebase
         databaseReference.child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -129,6 +139,27 @@ public class SurveyDoubleProblemFragment extends Fragment {
 
         //Toast.makeText(v.getContext(), " "+ age,Toast.LENGTH_LONG).show();
 
+        // Creating the database for the vitamin recommendations
+        inputStream = getResources().openRawResource(R.raw.database_recomendation);
+        VitaminRecDatabaseHandler vitaminRecDatabaseHandler = new VitaminRecDatabaseHandler(getActivity());
+        File file = new File("/data/data/com.example.vitamin_app/databases/vitamin_rec.db");
+        file.delete();
+        VitaminRecDatabaseHandler vitaminRecDatabaseHelper = new VitaminRecDatabaseHandler(getActivity());
+        BufferedInputStream bf = new BufferedInputStream(inputStream);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(bf, StandardCharsets.UTF_8));
+        String line;
+        try {
+            while ((line = reader.readLine()) != null) {
+                String[] str = line.split(",");
+                vitaminRecDatabaseHandler.addCSV(str[0], str[1], str[2], str[3], str[4]);
+            }
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        ArrayList<String[]> list = vitaminRecDatabaseHelper.getData();
+        databaselist = list;
+
         seek1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -144,14 +175,10 @@ public class SurveyDoubleProblemFragment extends Fragment {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) { }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) { }
         });
 
         seek2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -169,14 +196,10 @@ public class SurveyDoubleProblemFragment extends Fragment {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) { }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) { }
         });
 
 

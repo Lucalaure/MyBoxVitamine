@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.example.vitamin_app.R;
-import com.example.vitamin_app.VitaminDatabaseHandler;
+import com.example.vitamin_app.VitaminDetailDatabaseHandler;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -28,18 +28,17 @@ public class QuickFixActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         inputStream = getResources().openRawResource(R.raw.supplement_sheet_final);
-        VitaminDatabaseHandler vitaminDatabaseHandler = new VitaminDatabaseHandler(QuickFixActivity.this);
-        inputStream = getResources().openRawResource(R.raw.supplement_sheet_final);
+        VitaminDetailDatabaseHandler vitaminDetailDatabaseHandler = new VitaminDetailDatabaseHandler(QuickFixActivity.this);
         File file = new File("/data/data/com.example.vitamin_app/databases/vitamin.db");
         file.delete();
-        VitaminDatabaseHandler vitaminDatabaseHelper = new VitaminDatabaseHandler(QuickFixActivity.this);
+        VitaminDetailDatabaseHandler vitaminDatabaseHelper = new VitaminDetailDatabaseHandler(QuickFixActivity.this);
         BufferedInputStream bf = new BufferedInputStream(inputStream);
         BufferedReader reader = new BufferedReader(new InputStreamReader(bf, StandardCharsets.UTF_8));
         String line;
         try{
             while ((line = reader.readLine()) != null) {
                 String[] str = line.split(",");
-                vitaminDatabaseHandler.addCSV(str[1], str[2], str[3],str[5],str[4]);
+                vitaminDetailDatabaseHandler.addCSV(str[1], str[2], str[3],str[5],str[4]);
             }
         }
         catch (IOException ex) {

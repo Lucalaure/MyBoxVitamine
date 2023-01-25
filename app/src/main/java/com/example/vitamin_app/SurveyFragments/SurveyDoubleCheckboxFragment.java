@@ -30,20 +30,20 @@ public class SurveyDoubleCheckboxFragment extends Fragment {
         RadioButton problem2 = (RadioButton) v.findViewById(R.id.double_problem2);
 
         if (bundle.getBoolean("Energy")) {
-            problem1.setText("Lack of physical energy");
-            problem2.setText("Lack of mental energy");
+            problem1.setText("Mentale");
+            problem2.setText("Physique");
         } else if (bundle.getBoolean("Immunity")) {
-            problem1.setText("Strengthen immune system");
-            problem2.setText("Recovery from illness");
+            problem1.setText("Action");
+            problem2.setText("Prevention");
         }else if (bundle.getBoolean("Exercise")) {
-            problem1.setText("Improve physical performance");
-            problem2.setText("Improve post-execrise recovery");
+            problem1.setText("Recuperation");
+            problem2.setText("Preparation");
         } else if (bundle.getBoolean("Digestion")) {
-            problem1.setText("Struggle with general digestive problems");
-            problem2.setText("Acid base problems");
+            problem1.setText("Acido Basique");
+            problem2.setText("Probleme");
         } else if (bundle.getBoolean("Articulation")) {
-            problem1.setText("Joint movement discomfort");
-            problem2.setText("Joint pain");
+            problem1.setText("Douleurs");
+            problem2.setText("Movement");
         }
         return v;
     }

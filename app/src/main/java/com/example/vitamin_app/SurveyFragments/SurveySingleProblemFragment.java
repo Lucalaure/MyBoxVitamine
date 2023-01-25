@@ -16,11 +16,14 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.vitamin_app.Activities.QuickFixActivity;
 import com.example.vitamin_app.ToDoProblemList;
 import com.example.vitamin_app.R;
 import com.example.vitamin_app.Activities.ResultListActivity;
 import com.example.vitamin_app.ToDoDatabaseHandler;
 import com.example.vitamin_app.Users;
+import com.example.vitamin_app.VitaminRecDatabaseHandler;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +31,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class SurveySingleProblemFragment extends Fragment {
 
@@ -53,6 +65,9 @@ public class SurveySingleProblemFragment extends Fragment {
     Fragment triple = null;
     Fragment doublle = null;
     Fragment single = null;
+
+    InputStream inputStream;
+    static ArrayList<String[]> databaselist;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,88 +122,100 @@ public class SurveySingleProblemFragment extends Fragment {
             }
         });
 
+        // Creating the database for the vitamin recommendations
+        inputStream = getResources().openRawResource(R.raw.database_recomendation);
+        VitaminRecDatabaseHandler vitaminRecDatabaseHandler = new VitaminRecDatabaseHandler(getActivity());
+        File file = new File("/data/data/com.example.vitamin_app/databases/vitamin_rec.db");
+        file.delete();
+        VitaminRecDatabaseHandler vitaminRecDatabaseHelper = new VitaminRecDatabaseHandler(getActivity());
+        BufferedInputStream bf = new BufferedInputStream(inputStream);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(bf, StandardCharsets.UTF_8));
+        String line;
+        try {
+            while ((line = reader.readLine()) != null) {
+                String[] str = line.split(",");
+                vitaminRecDatabaseHandler.addCSV(str[0], str[1], str[2], str[3], str[4]);
+            }
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        ArrayList<String[]> list = vitaminRecDatabaseHelper.getData();
+        databaselist = list;
+
         Button endSurvey = (Button) v.findViewById(R.id.endSurvey);
         endSurvey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Assign supplements based on which problem from the checkbox fragment was selected
                 // Accounts for both age and gender of the user
+
                 boolean check = true;
                 db.deleteProblemTasks();
+
+                int index;
+
+                // Create ID string to search in database
+                String ID = "";
+                if (gender.equals("Male")) {
+                    ID += "M";
+                } else {
+                    ID += "F";
+                }
+                if (age.equals("12-20")) {
+                    ID += "A";
+                } else if (age.equals("20-60")) {
+                    ID += "B";
+                } else {
+                    ID += "C";
+                }
+
                 if (bundle.getBoolean(ToDoProblemList.WEIGHT)) {
+                    ID += "001";
                     user.setProblem(ToDoProblemList.WEIGHT);
                     db.insertProblemTask(ToDoProblemList.WEIGHT);
                     RadioButton triple_p1 = (RadioButton) triple.getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) triple.getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) triple.getView().findViewById(R.id.triple_problem3);
                     if (triple_p1.isChecked()) {
-                        user.setSupplement1("Bromelain");
-                        user.setSupplement2("Garcinia");
-                        user.setSupplement3("Grape Pomace");
-                        user.setSupplement4("Centella Asiatica");
+                        ID += "W";
+                        //Toast.makeText(v.getContext(),ID,Toast.LENGTH_SHORT).show();
                     } else if (triple_p2.isChecked()) {
-                        user.setSupplement1("Birch Sap");
-                        user.setSupplement2("Green Tea");
-                        user.setSupplement3("Artichoke");
-                        user.setSupplement4("Milk Thistle");
+                        ID +="Y";
                     } else if (triple_p3.isChecked()) {
-                        if (age.equals("12-20")) {
-                            user.setSupplement1("Nopal");
-                        } else {
-                            user.setSupplement1("Konjac");
-                        }
-                        user.setSupplement2("Kudzu");
-                        user.setSupplement3("Laminaria");
-                        user.setSupplement4("Linseed Oil");
+                        ID += "X";
                     } else {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
+                    search(databaselist, ID, user);
                 } else if (bundle.getBoolean(ToDoProblemList.SLEEP)) {
+                    ID += "002";
                     user.setProblem(ToDoProblemList.SLEEP);
                     db.insertProblemTask(ToDoProblemList.SLEEP);
                     RadioButton triple_p1 = (RadioButton) triple.getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) triple.getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) triple.getView().findViewById(R.id.triple_problem3);
                     if (triple_p1.isChecked()) {
-                        user.setSupplement1("Passiflora");
-                        user.setSupplement2("California Poppy");
-                        user.setSupplement3("L-Theanine");
-                        if (age.equals("12-20")) {
-                            user.setSupplement4("Melissa");
-                        } else {
-                            user.setSupplement4("Griffonia");
-                        }
+                        ID += "Y";
                     } else if (triple_p2.isChecked()) {
-                        ///////////////////////////////////////////////////////////////////////////////////////////
-                        // Need to edit
-                        user.setSupplement1("Valerian");
-                        user.setSupplement2("Melatonin");
-                        user.setSupplement3("L-Tryptophan");
-                        user.setSupplement4("Safran");
+                        ID +="X";
                     } else if (triple_p3.isChecked()) {
-                        user.setSupplement1("L-Theanine");
-                        user.setSupplement2("Griffonia");
-                        user.setSupplement3("Ashwagandha");
-                        user.setSupplement4("Hawthorn");
+                        ID += "W";
                     } else {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
+                    search(databaselist, ID, user);
                 } else if (bundle.getBoolean(ToDoProblemList.ENERGY)) {
+                    ID += "003";
                     user.setProblem(ToDoProblemList.ENERGY);
                     db.insertProblemTask(ToDoProblemList.ENERGY);
+                    // Only show one option for people over the age of 60
                     if (!age.equals("20-60")) {
                         RadioButton double_p1 = (RadioButton) single.getView().findViewById(R.id.double_problem1);
                         if (double_p1.isChecked()) {
-                            user.setSupplement1("B Vitamins");
-                            user.setSupplement2("L-Tryptophan");
-                            if (age.equals("12-20")) {
-                                user.setSupplement3("Royal Jelly");
-                            } else {
-                                user.setSupplement3("Rhodiola");
-                            }
-                            user.setSupplement4("Klamath");
+                            ID += "Y";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
@@ -197,158 +224,111 @@ public class SurveySingleProblemFragment extends Fragment {
                         RadioButton double_p1 = (RadioButton) doublle.getView().findViewById(R.id.double_problem1);
                         RadioButton double_p2 = (RadioButton) doublle.getView().findViewById(R.id.double_problem2);
                         if (double_p1.isChecked()) {
-                            user.setSupplement1("Magnesium");
-                            user.setSupplement2("Ginseng");
-                            user.setSupplement3("Guarana");
-                            user.setSupplement4("Coenzyme Q10");
+                            ID += "Y";
                         } else if (double_p2.isChecked()) {
-                            user.setSupplement1("B Vitamins");
-                            user.setSupplement2("L-Tryptophan");
-                            user.setSupplement3("Rhodiola");
-                            user.setSupplement4("Klamath");
+                            ID += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
                         }
                     }
+                    search(databaselist, ID, user);
                 } else if (bundle.getBoolean(ToDoProblemList.IMMUNITY)) {
+                    ID += "004";
                     user.setProblem(ToDoProblemList.IMMUNITY);
                     db.insertProblemTask(ToDoProblemList.IMMUNITY);
                     RadioButton double_p1 = (RadioButton) doublle.getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) doublle.getView().findViewById(R.id.double_problem2);
                     if (double_p1.isChecked()) {
-                        user.setSupplement1("D Vitamins");
-                        user.setSupplement2("Zinc");
-                        user.setSupplement3("Royal Jelly");
-                        user.setSupplement4("Shiitake");
+                        ID += "Y";
                     } else if (double_p2.isChecked()) {
-                        user.setSupplement1("Glutathione");
-                        user.setSupplement2("Nigella");
-                        user.setSupplement3("D Vitamins");
-                        user.setSupplement4("Propolis");
+                        ID += "W";
                     } else {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
+                    search(databaselist, ID, user);
                 } else if (bundle.getBoolean(ToDoProblemList.SKIN)) {
+                    ID += "005";
                     user.setProblem(ToDoProblemList.SKIN);
                     db.insertProblemTask(ToDoProblemList.SKIN);
                     RadioButton triple_p1 = (RadioButton) triple.getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) triple.getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) triple.getView().findViewById(R.id.triple_problem3);
                     if (triple_p1.isChecked()) {
-                        user.setSupplement1("Borage");
-                        user.setSupplement2("Nigella oil");
-                        user.setSupplement3("Silica");
-                        user.setSupplement4("Wheat Germ Oil");
+                        ID += "Y";
                     } else if (triple_p2.isChecked()) {
-                        user.setSupplement1("Vegan Collagen");
-                        user.setSupplement2("Silica");
-                        user.setSupplement3("Acerola");
-                        user.setSupplement4("Grape Seeds");
+                        ID += "X";
                     } else if (triple_p3.isChecked()) {
-                        user.setSupplement1("Wild Pansy");
-                        user.setSupplement2("Burdock Root");
-                        user.setSupplement3("Beer Yeast");
-                        user.setSupplement4("Zinc");
+                        ID += "W";
                     } else {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
+                    search(databaselist, ID, user);
                 } else if (bundle.getBoolean(ToDoProblemList.DETOX)) {
+                    ID += "007";
                     user.setProblem(ToDoProblemList.DETOX);
                     db.insertProblemTask(ToDoProblemList.DETOX);
                     RadioButton triple_p1 = (RadioButton) triple.getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) triple.getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) triple.getView().findViewById(R.id.triple_problem3);
                     if (triple_p1.isChecked()) {
-                        user.setSupplement1("Amalaki");
-                        user.setSupplement2("Chlorella");
-                        user.setSupplement3("Grapefruit Seeds");
-                        user.setSupplement4("Linden Sapwood");
+                        ID += "Y";
                     } else if (triple_p2.isChecked()) {
-                        user.setSupplement1("Rosmary");
-                        user.setSupplement2("Desmodium");
-                        user.setSupplement3("Chrysanthellum");
-                        user.setSupplement4("Milk Thistle");
+                        ID += "X";
                     } else if (triple_p3.isChecked()) {
-                        user.setSupplement1("Rosmary");
-                        user.setSupplement2("Fennel");
-                        user.setSupplement3("Peppermint");
-                        user.setSupplement4("Anise");
+                        ID += "W";
                     } else {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
+                    search(databaselist, ID, user);
                 } else if (bundle.getBoolean(ToDoProblemList.EXERCISE)) {
+                    ID += "006";
                     user.setProblem(ToDoProblemList.EXERCISE);
                     db.insertProblemTask(ToDoProblemList.EXERCISE);
                     RadioButton double_p1 = (RadioButton) doublle.getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) doublle.getView().findViewById(R.id.double_problem2);
                     if (double_p1.isChecked()) {
-                        user.setSupplement1("Spirulina");
-                        user.setSupplement2("Creatine");
-                        user.setSupplement3("L-Carnitine");
-                        user.setSupplement4("Warana");
+                        ID += "Y";
                     } else if (double_p2.isChecked()) {
-                        user.setSupplement1("Collagen");
-                        user.setSupplement2("Coenzyme Q10");
-                        user.setSupplement3("BCAA");
-                        user.setSupplement4("Glutamine");
+                        ID += "W";
                     } else {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
+                    search(databaselist, ID, user);
                 } else if (bundle.getBoolean(ToDoProblemList.DIGESTION)) {
+                    ID += "008";
                     user.setProblem(ToDoProblemList.DIGESTION);
                     db.insertProblemTask(ToDoProblemList.DIGESTION);
                     RadioButton double_p1 = (RadioButton) doublle.getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) doublle.getView().findViewById(R.id.double_problem2);
                     if (double_p1.isChecked()) {
-                        user.setSupplement1("Fennel");
-                        if (!age.equals("20-60")) {
-                            user.setSupplement2("Amalaki");
-                        } else {
-                            user.setSupplement2("Curcuma");
-                        }
-                        user.setSupplement3("Coriandre");
-                        user.setSupplement4("Propolis");
+                        ID += "Y";
                     } else if (double_p2.isChecked()) {
-                        user.setSupplement1("Bromelain");
-                        user.setSupplement2("Cardamom");
-                        user.setSupplement3("Lithothamne");
-                        user.setSupplement4("Licorice");
+                        ID += "W";
                     } else {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
+                    search(databaselist, ID, user);
                 } else if (bundle.getBoolean(ToDoProblemList.ARTICULATION)) {
+                    ID += "009";
                     user.setProblem(ToDoProblemList.ARTICULATION);
                     db.insertProblemTask(ToDoProblemList.ARTICULATION);
                     RadioButton double_p1 = (RadioButton) doublle.getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) doublle.getView().findViewById(R.id.double_problem2);
                     if (double_p1.isChecked()) {
-                        user.setSupplement1("Collagen");
-                        user.setSupplement2("Boswellia");
-                        user.setSupplement3("Fermented Papaya");
-                        if (age.equals("12-20")) {
-                            user.setSupplement4("Borage");
-                        } else {
-                            user.setSupplement4("Silica");
-                        }
+                        ID += "Y";
                     } else if (double_p2.isChecked()) {
-                        user.setSupplement1("Meadowsweet");
-                        if (age.equals("12-20")) {
-                            user.setSupplement2("Glucosamine");
-                        } else {
-                            user.setSupplement2("Curcumin");
-                        }
-                        user.setSupplement3("Palmitoylethanolamide");
-                        user.setSupplement4("Black Currant");
+                        ID += "W";
                     } else {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
+                    search(databaselist, ID, user);
                 }
 
                 if (check) {
@@ -448,5 +428,18 @@ public class SurveySingleProblemFragment extends Fragment {
             fragmentTransaction.replace(R.id.checkboxLayout, doublle);
             fragmentTransaction.commit();
         }
+    }
+
+    public static void search(ArrayList<String[]> db, String ID, Users user) {
+        int index = -1;
+        for(int i = 0; i < databaselist.size(); i++){
+            if(databaselist.get(i)[0].equals(ID)){
+                index = i;
+            }
+        }
+        user.setSupplement1(databaselist.get(index)[1]);
+        user.setSupplement2(databaselist.get(index)[2]);
+        user.setSupplement3(databaselist.get(index)[3]);
+        user.setSupplement4(databaselist.get(index)[4]);
     }
 }

@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class VitaminDatabaseHandler extends SQLiteOpenHelper {
+public class VitaminDetailDatabaseHandler extends SQLiteOpenHelper {
     public static final String VITAMIN_TABLE = "vitamin_table";
     public static final String VITAMIN_NAME = "vitamin_name";
     public static final String VITAMIN_TYPE = "vitamin_type";
@@ -21,8 +21,8 @@ public class VitaminDatabaseHandler extends SQLiteOpenHelper {
     public static final String VITAMIN_IMAGE = "vitamin_image";
     public static final String COLUMN_ID  ="column_id";
     private static final int VERSION = 2;
-    private static InputStream inputStream;
-    public VitaminDatabaseHandler(@Nullable Context context){
+
+    public VitaminDetailDatabaseHandler(@Nullable Context context){
         super(context,"vitamin.db", null,VERSION);
     }
 
