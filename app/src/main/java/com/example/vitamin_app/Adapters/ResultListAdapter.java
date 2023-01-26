@@ -30,6 +30,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Vi
     FirebaseDatabase fbdb;
     DatabaseReference fbdbr;
     String username;
+    String email;
 
     // append supplement name to this string for search
     private static final String GOOGLE_SEARCH_URL = "https://www.google.com/search?q=webmd ";
@@ -43,6 +44,8 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Vi
 
         // get and store username
         username = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        email = FirebaseAuth.getInstance().getCurrentUser().getEmail().replace(".","1").replace("#","2")
+                .replace("\\$","3").replace("\\[","4").replace("]","5");
 
         // if we were to store multiple results,
         // could poll db here and store number to use for getItemCount.
@@ -109,7 +112,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // search db for data of currently signed in user
-        fbdbr.child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        fbdbr.child(email).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {

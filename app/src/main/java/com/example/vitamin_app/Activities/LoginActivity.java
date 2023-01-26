@@ -58,10 +58,6 @@ public class LoginActivity extends AppCompatActivity {
     private String genericError = "An Error Occurred, Please Try Again Later";
     private String databaseReadError = "Failed to read data";
 
-    //Arrays for user information (gender and age)
-    String[] genderList = new String[] {"Male", "Female", "Other"};
-    String[] ageList = new String[43];
-
     // creating a variable for our
     // Firebase Database.
     FirebaseDatabase firebaseDatabase;
@@ -94,8 +90,8 @@ public class LoginActivity extends AppCompatActivity {
         //Get last client to sign in and go to homepage if already logged in
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null){
-            signedIn = true;
-            goHome(currentUser);
+            //signedIn = true;
+            //goHome(currentUser);
         }
 
         //If flag is true, show Google OneTap login
@@ -274,13 +270,14 @@ public class LoginActivity extends AppCompatActivity {
 
                             //Retrieve information related to user
                             FirebaseUser currentUser = mAuth.getCurrentUser();
-                            String email = currentUser.getEmail();
+                            String email = currentUser.getEmail().replace(".","1").replace("#","2")
+                                    .replace("\\$","3").replace("\\[","4").replace("]","5");
                             String userId = currentUser.getDisplayName();
                             firebaseDatabase = FirebaseDatabase.getInstance();
                             databaseReference = firebaseDatabase.getReference("Users");
 
                             // Checking if user exists in database
-                            databaseReference.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            databaseReference.child(email).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     //Ping the database without any issue
@@ -290,12 +287,12 @@ public class LoginActivity extends AppCompatActivity {
                                             Toast.makeText(LoginActivity.this, "User does not exist in database",Toast.LENGTH_LONG).show();
 
                                             // default user is a 60+ year old man
-                                            user = new Users(email, userId, "male", "60+");
+                                            user = new Users(email, userId, "Male", "60+");
                                             databaseReference.addValueEventListener(new ValueEventListener() {
 
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                    databaseReference.child(userId).setValue(user);
+                                                    databaseReference.child(email).setValue(user);
                                                 }
                                                 @Override
                                                 public void onCancelled(@NonNull DatabaseError error) {}

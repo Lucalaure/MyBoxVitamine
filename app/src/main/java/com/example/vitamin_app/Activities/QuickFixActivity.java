@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.example.vitamin_app.R;
-import com.example.vitamin_app.VitaminDetailDatabaseHandler;
+import com.example.vitamin_app.Handlers.VitaminDetailDatabaseHandler;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

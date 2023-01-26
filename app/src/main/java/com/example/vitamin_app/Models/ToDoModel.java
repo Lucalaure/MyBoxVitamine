@@ -1,4 +1,4 @@
-package com.example.vitamin_app.Model;
+package com.example.vitamin_app.Models;
 
 public class ToDoModel {
     private int id, status;

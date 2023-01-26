@@ -19,11 +19,10 @@ import android.widget.Toast;
 import com.example.vitamin_app.Activities.LoginActivity;
 import com.example.vitamin_app.Adapters.ToDoAdapter;
 import com.example.vitamin_app.AddNewTask;
-import com.example.vitamin_app.Model.ToDoModel;
+import com.example.vitamin_app.Models.ToDoModel;
 import com.example.vitamin_app.R;
 import com.example.vitamin_app.RecyclerItemTouchHelper;
-import com.example.vitamin_app.ToDoDatabaseHandler;
-import com.example.vitamin_app.Users;
+import com.example.vitamin_app.Handlers.ToDoDatabaseHandler;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -48,8 +47,6 @@ public class ProfileFragment extends Fragment {
     // creating a variable for our Database
     // Reference for Firebase.
     DatabaseReference databaseReference;
-
-    Users user;
 
     // to store data from user's database
     String problem1;
@@ -117,9 +114,10 @@ public class ProfileFragment extends Fragment {
         });
 
         // Retrieving user data from firebase
-        String username = currentUser.getDisplayName();
-        String email = currentUser.getEmail();
-        databaseReference.child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        // String username = currentUser.getDisplayName();
+        String email = currentUser.getEmail().replace(".","1").replace("#","2")
+                .replace("\\$","3").replace("\\[","4").replace("]","5");
+        databaseReference.child(email).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -132,8 +130,8 @@ public class ProfileFragment extends Fragment {
                         gender = String.valueOf(dataSnapshot.child("gender").getValue());
                         age = String.valueOf(dataSnapshot.child("age").getValue());
                         if (age == "null" && gender == "null") {
-                            databaseReference.child(username).child("age").setValue("20-60");
-                            databaseReference.child(username).child("gender").setValue("male");
+                            databaseReference.child(email).child("age").setValue("20-60");
+                            databaseReference.child(email).child("gender").setValue("male");
                         }
                     } else {
                         Toast.makeText(v.getContext(), "Welcome new User",Toast.LENGTH_LONG).show();

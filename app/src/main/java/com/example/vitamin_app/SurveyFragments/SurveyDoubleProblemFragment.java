@@ -20,9 +20,9 @@ import android.widget.Toast;
 import com.example.vitamin_app.ToDoProblemList;
 import com.example.vitamin_app.R;
 import com.example.vitamin_app.Activities.ResultListActivity;
-import com.example.vitamin_app.ToDoDatabaseHandler;
+import com.example.vitamin_app.Handlers.ToDoDatabaseHandler;
 import com.example.vitamin_app.Users;
-import com.example.vitamin_app.VitaminRecDatabaseHandler;
+import com.example.vitamin_app.Handlers.VitaminRecDatabaseHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,10 +73,6 @@ public class SurveyDoubleProblemFragment extends Fragment {
     Fragment single1 = null;
     Fragment single2 = null;
 
-    String vit1;
-    String vit2;
-    String vit3;
-
     ArrayList<Fragment> array = new ArrayList<Fragment>();
 
     InputStream inputStream;
@@ -107,7 +103,8 @@ public class SurveyDoubleProblemFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         String username = currentUser.getDisplayName();
-        String email = currentUser.getEmail();
+        String email = currentUser.getEmail().replace(".","1").replace("#","2")
+                .replace("\\$","3").replace("\\[","4").replace("]","5");
 
         Bundle bundle = this.getArguments();
         problem1 = (TextView) v.findViewById(R.id.text_problem1);
@@ -116,7 +113,7 @@ public class SurveyDoubleProblemFragment extends Fragment {
         SeekBar seek2 = (SeekBar) v.findViewById(R.id.seekBar2);
 
         // Retrieving user data from firebase
-        databaseReference.child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseReference.child(email).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -160,6 +157,7 @@ public class SurveyDoubleProblemFragment extends Fragment {
         ArrayList<String[]> list = vitaminRecDatabaseHelper.getData();
         databaselist = list;
 
+        // seek bar logic
         seek1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -660,7 +658,7 @@ public class SurveyDoubleProblemFragment extends Fragment {
                 }
 
                 if (check) {
-                    databaseReference.child(username).setValue(user);
+                    databaseReference.child(email).setValue(user);
 
                     Intent intent = new Intent(view.getContext(), ResultListActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -897,7 +895,6 @@ public class SurveyDoubleProblemFragment extends Fragment {
     }
 
     public static int search(ArrayList<String[]> db, String ID, Users user) {
-        int index = -1;
         for(int i = 0; i < db.size(); i++){
             if(db.get(i)[0].equals(ID)){
                 return i;

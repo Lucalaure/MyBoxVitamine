@@ -12,10 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.vitamin_app.AddNewTask;
-import com.example.vitamin_app.Model.ToDoModel;
+import com.example.vitamin_app.Models.ToDoModel;
 import com.example.vitamin_app.Fragments.ProfileFragment;
 import com.example.vitamin_app.R;
-import com.example.vitamin_app.ToDoDatabaseHandler;
+import com.example.vitamin_app.Handlers.ToDoDatabaseHandler;
 
 
 import java.util.List;

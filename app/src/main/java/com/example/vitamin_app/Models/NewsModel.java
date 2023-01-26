@@ -1,4 +1,4 @@
-package com.example.vitamin_app.Model;
+package com.example.vitamin_app.Models;
 
 //Object to hold article information from News-API
 public class NewsModel {

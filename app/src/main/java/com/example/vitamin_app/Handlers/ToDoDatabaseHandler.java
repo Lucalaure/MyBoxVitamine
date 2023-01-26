@@ -1,4 +1,4 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Handlers;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -7,7 +7,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.vitamin_app.Model.ToDoModel;
+import com.example.vitamin_app.Models.ToDoModel;
+import com.example.vitamin_app.ToDoProblemList;
+
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;

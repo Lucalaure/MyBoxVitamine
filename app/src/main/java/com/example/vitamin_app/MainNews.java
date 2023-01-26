@@ -1,6 +1,6 @@
 package com.example.vitamin_app;
 
-import com.example.vitamin_app.Model.NewsModel;
+import com.example.vitamin_app.Models.NewsModel;
 
 import java.util.ArrayList;
 

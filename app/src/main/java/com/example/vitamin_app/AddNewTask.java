@@ -21,7 +21,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.vitamin_app.Fragments.CalendarDialogFragment;
 import com.example.vitamin_app.Fragments.ProfileFragment;
-import com.example.vitamin_app.Model.ToDoModel;
+import com.example.vitamin_app.Handlers.ToDoDatabaseHandler;
+import com.example.vitamin_app.Models.ToDoModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;;
 
 public class AddNewTask extends BottomSheetDialogFragment {

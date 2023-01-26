@@ -66,10 +66,12 @@ public class SurveyAgeGenderConfirmFragment extends Fragment {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        String username = currentUser.getDisplayName();
+        // String username = currentUser.getDisplayName();
+        String email = currentUser.getEmail().replace(".","1").replace("#","2")
+                .replace("\\$","3").replace("\\[","4").replace("]","5");
 
         // Retrieving user data from firebase
-        databaseReference.child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseReference.child(email).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -105,7 +107,7 @@ public class SurveyAgeGenderConfirmFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String new_age = ageSpinner.getSelectedItem().toString();
-                databaseReference.child(username).child("age").setValue(new_age);
+                databaseReference.child(email).child("age").setValue(new_age);
             }
 
             @Override
@@ -118,7 +120,7 @@ public class SurveyAgeGenderConfirmFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String new_gender = genderSpinner.getSelectedItem().toString();
-                databaseReference.child(username).child("gender").setValue(new_gender);
+                databaseReference.child(email).child("gender").setValue(new_gender);
             }
 
             @Override

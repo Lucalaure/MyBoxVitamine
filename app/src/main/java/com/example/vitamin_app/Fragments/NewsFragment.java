@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.vitamin_app.Adapters.NewsAdapter;
 import com.example.vitamin_app.ApiUtilites;
 import com.example.vitamin_app.MainNews;
-import com.example.vitamin_app.Model.NewsModel;
+import com.example.vitamin_app.Models.NewsModel;
 import com.example.vitamin_app.R;
 
 import java.util.ArrayList;

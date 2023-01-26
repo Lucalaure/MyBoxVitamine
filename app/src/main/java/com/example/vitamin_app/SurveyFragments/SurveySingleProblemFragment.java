@@ -16,14 +16,12 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.vitamin_app.Activities.QuickFixActivity;
 import com.example.vitamin_app.ToDoProblemList;
 import com.example.vitamin_app.R;
 import com.example.vitamin_app.Activities.ResultListActivity;
-import com.example.vitamin_app.ToDoDatabaseHandler;
+import com.example.vitamin_app.Handlers.ToDoDatabaseHandler;
 import com.example.vitamin_app.Users;
-import com.example.vitamin_app.VitaminRecDatabaseHandler;
-import com.firebase.ui.auth.data.model.User;
+import com.example.vitamin_app.Handlers.VitaminRecDatabaseHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -98,10 +96,11 @@ public class SurveySingleProblemFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         String username = currentUser.getDisplayName();
-        String email = currentUser.getEmail();
+        String email = currentUser.getEmail().replace(".","1").replace("#","2")
+                .replace("\\$","3").replace("\\[","4").replace("]","5");
 
         // Retrieving user data from firebase
-        databaseReference.child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseReference.child(email).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -330,7 +329,7 @@ public class SurveySingleProblemFragment extends Fragment {
                 }
 
                 if (check) {
-                    databaseReference.child(username).setValue(user);
+                    databaseReference.child(email).setValue(user);
 
                     Intent intent = new Intent(view.getContext(), ResultListActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

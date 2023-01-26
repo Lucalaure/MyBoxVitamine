@@ -1,4 +1,4 @@
-package com.example.vitamin_app;
+package com.example.vitamin_app.Handlers;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
