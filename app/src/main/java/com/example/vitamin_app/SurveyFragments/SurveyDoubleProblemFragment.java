@@ -213,781 +213,447 @@ public class SurveyDoubleProblemFragment extends Fragment {
                 // Also code needs to account on whether the problem was checked first or second (the order) to make
                 // sure it's assigning the ratio correctly based on seek bar 1 seek bar 2, and also assigning the supplements
                 // correctly in the DB
+
+                // Create ID string to search in database
+                String ID = "";
+                String ID2 = "";
+                if (gender.equals("Male")) {
+                    ID += "M";
+                    ID2 += "M";
+                } else {
+                    ID += "F";
+                    ID2 += "F";
+                }
+                if (age.equals("12-20")) {
+                    ID += "A";
+                    ID2 += "A";
+                } else if (age.equals("20-60")) {
+                    ID += "B";
+                    ID2 += "B";
+                } else {
+                    ID += "C";
+                    ID2 += "C";
+                }
+
+                int index;
                 boolean check = true;
                 db.deleteProblemTasks();
                 int count = 0;
                 if (bundle.getBoolean(ToDoProblemList.WEIGHT)) {
+                    ID += "001";
                     user.setProblem(ToDoProblemList.WEIGHT);
                     db.insertProblemTask(ToDoProblemList.WEIGHT);
                     RadioButton triple_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem3);
                     if (triple_p1.isChecked()) {
-                        vit3 = "Garcinia";
-                        if (gender.equals("male")) {
-                            vit1 = "Bromelain";
-                            vit2 = "Grape Pomace";
-                        } else {
-                            vit2 = "Bromelain";
-                            vit1 = "Grape Pomace";
-                        }
-
-                        if (seek1.getProgress() == 1) {
-                            user.setSupplement1(vit1);
-                        } else if (seek1.getProgress() == 2) {
-                            user.setSupplement1(vit1);
-                            user.setSupplement2(vit2);
-                        } else {
-                            user.setSupplement1(vit1);
-                            user.setSupplement2(vit2);
-                            user.setSupplement3(vit3);
-                        }
+                        ID += "W";
                     } else if (triple_p2.isChecked()) {
-                        if (seek1.getProgress() == 1) {
-                            user.setSupplement1("Green Tea");
-                        } else if (seek1.getProgress() == 2) {
-                            user.setSupplement1("Green Tea");
-                            user.setSupplement2("Artichoke");
-                        } else {
-                            user.setSupplement1("Green Tea");
-                            user.setSupplement2("Artichoke");
-                            user.setSupplement3("Milk Thistle");
-                        }
+                        ID +="Y";
                     } else if (triple_p3.isChecked()) {
-                        if (gender.equals("male")) {
-                            vit1 = "Kudzu";
-                            if (age.equals("12-20")) {
-                                vit2 = "Nopal";
-                            } else {
-                                vit2 = "Konjac";
-                            }
-                            vit3 = "Laminaria";
-                        } else {
-                            if (age.equals("12-20")) {
-                                vit1 = "Nopal";
-                            } else {
-                                vit1 = "Konjac";
-                            }
-                            vit2 = "Laminaria";
-                            vit3 = "Kudzu";
-                        }
-
-                        if (seek1.getProgress() == 1) {
-                            user.setSupplement1(vit1);
-                        } else if (seek1.getProgress() == 2) {
-                            user.setSupplement1(vit1);
-                            user.setSupplement2(vit2);
-                        } else {
-                            user.setSupplement1(vit1);
-                            user.setSupplement2(vit2);
-                            user.setSupplement3(vit3);
-                        }
+                        ID += "X";
                     } else {
                         Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                         check = false;
                     }
+                    index = search(databaselist, ID, user);
+                    user.setSupplement1(databaselist.get(index)[1]);
+                    user.setSupplement2(databaselist.get(index)[2]);
+                    user.setSupplement3(databaselist.get(index)[3]);
                     count++;
                 } if (bundle.getBoolean(ToDoProblemList.SLEEP)) {
+                    db.insertProblemTask(ToDoProblemList.SLEEP);
                     RadioButton triple_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem3);
-                    if (triple_p1.isChecked()) {
-                        vit3 = "L-Theanine";
-                        if (age.equals("20-60")) {
-                            vit1 = "California Poppy";
-                            vit2 = "Griffonia";
-                        } else if (age.equals("12-20")) {
-                            vit1 = "California Poppy";
-                            vit2 = "Melissa";
-                        } else {
-                            vit2 = "California Poppy";
-                            vit1 = "Griffonia";
-                        }
-                    }
                     if (count == 0) {
+                        ID += "002";
                         user.setProblem(ToDoProblemList.SLEEP);
-                        db.insertProblemTask(ToDoProblemList.SLEEP);
                         if (triple_p1.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1(vit1);
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1(vit1);
-                                user.setSupplement2(vit2);
-                            } else {
-                                user.setSupplement1(vit1);
-                                user.setSupplement2(vit2);
-                                user.setSupplement3(vit3);
-                            }
+                            ID += "Y";
                         } else if (triple_p2.isChecked()) {
-                            ///////////////////////////////////////////////////////////////////////////
-                            // Might need to change
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1("Valerian");
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1("Valerian");
-                                user.setSupplement2("Melatonin");
-                            } else {
-                                user.setSupplement1("Valerian");
-                                user.setSupplement2("Melatonin");
-                                user.setSupplement3("L-Tryptophan");
-                            }
+                            ID +="X";
                         } else if (triple_p3.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1("Hawthorn");
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1("Hawthorn");
-                                user.setSupplement2("Ashwagandha");
-                            } else {
-                                user.setSupplement1("Hawthorn");
-                                user.setSupplement2("Ashwagandha");
-                                user.setSupplement3("Griffonia");
-                            }
+                            ID += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
                         }
+                        index = search(databaselist, ID, user);
+                        user.setSupplement1(databaselist.get(index)[1]);
+                        user.setSupplement2(databaselist.get(index)[2]);
+                        user.setSupplement3(databaselist.get(index)[3]);
                     } else {
+                        ID2 += "002";
                         user.setProblem2(ToDoProblemList.SLEEP);
-                        db.insertProblemTask(ToDoProblemList.SLEEP);
                         if (triple_p1.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4(vit1);
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4(vit1);
-                                user.setSupplement3(vit2);
-                            } else {
-                                user.setSupplement4(vit1);
-                                user.setSupplement3(vit2);
-                                user.setSupplement2(vit3);
-                            }
+                            ID2 += "Y";
                         } else if (triple_p2.isChecked()) {
-                            ///////////////////////////////////////////////////////////////////////////
-                            // Might need to change
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4("Valerian");
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4("Valerian");
-                                user.setSupplement3("Melatonin");
-                            } else {
-                                user.setSupplement4("Valerian");
-                                user.setSupplement3("Melatonin");
-                                user.setSupplement2("L-Tryptophan");
-                            }
+                            ID2 +="X";
                         } else if (triple_p3.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4("Hawthorn");
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4("Hawthorn");
-                                user.setSupplement3("Ashwagandha");
-                            } else {
-                                user.setSupplement4("Hawthorn");
-                                user.setSupplement3("Ashwagandha");
-                                user.setSupplement2("Griffonia");
-                            }
+                            ID2 += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
+                        }
+                        index = search(databaselist, ID2, user);
+                        if (seek2.getProgress() == 1) {
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else if (seek2.getProgress() == 2) {
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else {
+                            user.setSupplement2(databaselist.get(index)[3]);
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
                         }
                     }
                     count++;
                 } if (bundle.getBoolean(ToDoProblemList.ENERGY)) {
+                    db.insertProblemTask(ToDoProblemList.ENERGY);
                     RadioButton double_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem1);
-                    if (double_p1.isChecked()) {
-                        if (age.equals("60+")) {
-                            vit1 = "Klamath";
-                            vit2 = "Rhodiola";
-                            vit3 = "B Vitamins";
-                        } else if (age.equals("12-20")) {
-                            ///////////////////////////////////////////////////////////////////
-                            // Might need to change
-                            vit1 = "Royal Jelly";
-                            vit2 = "B Vitamins";
-                            vit3 = "L-Tryptophan";
-                        } else {
-                            vit1 = "Rhodiola";
-                            vit2 = "B Vitamins";
-                            vit3 = "L-Tryptophan";
-                        }
-                    }
                     if (!age.equals("20-60")) {
                         if (count == 0) {
+                            ID += "003";
                             user.setProblem(ToDoProblemList.ENERGY);
-                            db.insertProblemTask(ToDoProblemList.ENERGY);
                             if (double_p1.isChecked()) {
-                                if (seek1.getProgress() == 1) {
-                                    user.setSupplement1(vit1);
-                                } else if (seek1.getProgress() == 2) {
-                                    user.setSupplement1(vit1);
-                                    user.setSupplement2(vit2);
-                                } else {
-                                    user.setSupplement1(vit1);
-                                    user.setSupplement2(vit2);
-                                    user.setSupplement3(vit3);
-                                }
+                                ID += "Y";
                             } else {
                                 Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                                 check = false;
                             }
+                            index = search(databaselist, ID, user);
+                            user.setSupplement1(databaselist.get(index)[1]);
+                            user.setSupplement2(databaselist.get(index)[2]);
+                            user.setSupplement3(databaselist.get(index)[3]);
                         } else {
+                            ID2 += "003";
                             user.setProblem2(ToDoProblemList.ENERGY);
-                            db.insertProblemTask(ToDoProblemList.ENERGY);
                             if (double_p1.isChecked()) {
-                                if (seek2.getProgress() == 1) {
-                                    user.setSupplement4(vit1);
-                                } else if (seek2.getProgress() == 2) {
-                                    user.setSupplement4(vit1);
-                                    user.setSupplement3(vit2);
-                                } else {
-                                    user.setSupplement4(vit1);
-                                    user.setSupplement3(vit2);
-                                    user.setSupplement2(vit3);
-                                }
+                                ID2 += "Y";
                             } else {
                                 Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                                 check = false;
+                            }
+                            index = search(databaselist, ID2, user);
+                            if (seek2.getProgress() == 1) {
+                                user.setSupplement4(databaselist.get(index)[1]);
+                            } else if (seek2.getProgress() == 2) {
+                                user.setSupplement3(databaselist.get(index)[2]);
+                                user.setSupplement4(databaselist.get(index)[1]);
+                            } else {
+                                user.setSupplement2(databaselist.get(index)[3]);
+                                user.setSupplement3(databaselist.get(index)[2]);
+                                user.setSupplement4(databaselist.get(index)[1]);
                             }
                         }
                     } else {
                         RadioButton double_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem2);
                         if (count == 0) {
+                            ID += "003";
                             user.setProblem(ToDoProblemList.ENERGY);
-                            db.insertProblemTask(ToDoProblemList.ENERGY);
                             if (double_p1.isChecked()) {
-                                if (seek1.getProgress() == 1) {
-                                    user.setSupplement1("Guarana");
-                                } else if (seek1.getProgress() == 2) {
-                                    user.setSupplement1("Guarana");
-                                    user.setSupplement2("Magnesium");
-                                } else {
-                                    user.setSupplement1("Guarana");
-                                    user.setSupplement2("Magnesium");
-                                    user.setSupplement3("Coenzyme Q10");
-                                }
+                                ID += "Y";
                             } else if (double_p2.isChecked()) {
-                                if (seek1.getProgress() == 1) {
-                                    user.setSupplement1(vit1);
-                                } else if (seek1.getProgress() == 2) {
-                                    user.setSupplement1(vit1);
-                                    user.setSupplement2(vit2);
-                                } else {
-                                    user.setSupplement1(vit1);
-                                    user.setSupplement2(vit2);
-                                    user.setSupplement3(vit3);
-                                }
+                                ID += "W";
                             } else {
                                 Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                                 check = false;
                             }
+                            index = search(databaselist, ID, user);
+                            user.setSupplement1(databaselist.get(index)[1]);
+                            user.setSupplement2(databaselist.get(index)[2]);
+                            user.setSupplement3(databaselist.get(index)[3]);
                         } else {
+                            ID2 += "003";
                             user.setProblem2(ToDoProblemList.ENERGY);
-                            db.insertProblemTask(ToDoProblemList.ENERGY);
                             if (double_p1.isChecked()) {
-                                if (seek2.getProgress() == 1) {
-                                    user.setSupplement4("Guarana");
-                                } else if (seek2.getProgress() == 2) {
-                                    user.setSupplement4("Guarana");
-                                    user.setSupplement3("Magnesium");
-                                } else {
-                                    user.setSupplement4("Guarana");
-                                    user.setSupplement3("Magnesium");
-                                    user.setSupplement2("Coenzyme Q10");
-                                }
+                                ID2 += "Y";
                             } else if (double_p2.isChecked()) {
-                                if (seek2.getProgress() == 1) {
-                                    user.setSupplement4(vit1);
-                                } else if (seek2.getProgress() == 2) {
-                                    user.setSupplement4(vit1);
-                                    user.setSupplement3(vit2);
-                                } else {
-                                    user.setSupplement4(vit1);
-                                    user.setSupplement3(vit2);
-                                    user.setSupplement2(vit3);
-                                }
+                                ID2 += "W";
                             } else {
                                 Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                                 check = false;
+                            }
+                            index = search(databaselist, ID2, user);
+                            if (seek2.getProgress() == 1) {
+                                user.setSupplement4(databaselist.get(index)[1]);
+                            } else if (seek2.getProgress() == 2) {
+                                user.setSupplement3(databaselist.get(index)[2]);
+                                user.setSupplement4(databaselist.get(index)[1]);
+                            } else {
+                                user.setSupplement2(databaselist.get(index)[3]);
+                                user.setSupplement3(databaselist.get(index)[2]);
+                                user.setSupplement4(databaselist.get(index)[1]);
                             }
                         }
                     }
                     count++;
                 } if (bundle.getBoolean(ToDoProblemList.IMMUNITY)) {
+                    db.insertProblemTask(ToDoProblemList.IMMUNITY);
                     RadioButton double_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem2);
-                    if (double_p1.isChecked()) {
-                        if (age.equals("60+")) {
-                            vit1 = "Royal Jelly";
-                            vit2 = "Zinc";
-                            vit3 = "Shiitake";
-                        } else {
-                            vit1 = "Zinc";
-                            vit2 = "Shiitake";
-                            vit3 = "D Vitamins";
-                        }
-                    }
                     if (count == 0) {
+                        ID += "004";
                         user.setProblem(ToDoProblemList.IMMUNITY);
-                        db.insertProblemTask(ToDoProblemList.IMMUNITY);
                         if (double_p1.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1(vit1);
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1(vit1);
-                                user.setSupplement2(vit2);
-                            } else {
-                                user.setSupplement1(vit1);
-                                user.setSupplement2(vit2);
-                                user.setSupplement3(vit3);
-                            }
+                            ID += "Y";
                         } else if (double_p2.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1("Propolis");
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1("Propolis");
-                                user.setSupplement2("Nigella");
-                            } else {
-                                user.setSupplement1("Propolis");
-                                user.setSupplement2("Nigella");
-                                user.setSupplement3("Glutathione");
-                            }
+                            ID += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
                         }
+                        index = search(databaselist, ID, user);
+                        user.setSupplement1(databaselist.get(index)[1]);
+                        user.setSupplement2(databaselist.get(index)[2]);
+                        user.setSupplement3(databaselist.get(index)[3]);
                     } else {
+                        ID2 += "004";
                         user.setProblem2(ToDoProblemList.IMMUNITY);
-                        db.insertProblemTask(ToDoProblemList.IMMUNITY);
                         if (double_p1.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4(vit1);
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4(vit1);
-                                user.setSupplement3(vit2);
-                            } else {
-                                user.setSupplement4(vit1);
-                                user.setSupplement3(vit2);
-                                user.setSupplement2(vit3);
-                            }
+                            ID2 += "Y";
                         } else if (double_p2.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4("Propolis");
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4("Propolis");
-                                user.setSupplement3("Nigella");
-                            } else {
-                                user.setSupplement4("Propolis");
-                                user.setSupplement2("Nigella");
-                                user.setSupplement3("Glutathione");
-                            }
+                            ID2 += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
+                        }
+                        index = search(databaselist, ID2, user);
+                        if (seek2.getProgress() == 1) {
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else if (seek2.getProgress() == 2) {
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else {
+                            user.setSupplement2(databaselist.get(index)[3]);
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
                         }
                     }
                     count++;
                 } if (bundle.getBoolean(ToDoProblemList.SKIN)) {
+                    db.insertProblemTask(ToDoProblemList.SKIN);
                     RadioButton triple_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem3);
-                    if (triple_p1.isChecked()) {
-                        vit3 = "Silica";
-                        if (age.equals("60+")) {
-                            vit1 = "Wheat Germ Oil";
-                            vit2 = "Borage";
-                        } else {
-                            vit2 = "Wheat Germ Oil";
-                            vit1 = "Borage";
-                        }
-                    }
                     if (count == 0) {
+                        ID += "005";
                         user.setProblem(ToDoProblemList.SKIN);
-                        db.insertProblemTask(ToDoProblemList.SKIN);
                         if (triple_p1.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1(vit1);
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1(vit1);
-                                user.setSupplement2(vit2);
-                            } else {
-                                user.setSupplement1(vit1);
-                                user.setSupplement2(vit2);
-                                user.setSupplement3(vit3);
-                            }
+                            ID += "Y";
                         } else if (triple_p2.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1("Vegan Collagen");
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1("Vegan Collagen");
-                                user.setSupplement2("Grape Seeds");
-                            } else {
-                                user.setSupplement1("Vegan Collagen");
-                                user.setSupplement2("Grape Seeds");
-                                user.setSupplement3("Acerola");
-                            }
+                            ID += "X";
                         } else if (triple_p3.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1("Beer Yeast");
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1("Beer Yeast");
-                                user.setSupplement2("Zinc");
-                            } else {
-                                user.setSupplement1("Beer Yeast");
-                                user.setSupplement2("Zinc");
-                                user.setSupplement3("Burdock Root");
-                            }
+                            ID += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
                         }
+                        index = search(databaselist, ID, user);
+                        user.setSupplement1(databaselist.get(index)[1]);
+                        user.setSupplement2(databaselist.get(index)[2]);
+                        user.setSupplement3(databaselist.get(index)[3]);
                     } else {
+                        ID2 += "005";
                         user.setProblem2(ToDoProblemList.SKIN);
-                        db.insertProblemTask(ToDoProblemList.SKIN);
                         if (triple_p1.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4(vit1);
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4(vit1);
-                                user.setSupplement3(vit2);
-                            } else {
-                                user.setSupplement4(vit1);
-                                user.setSupplement2(vit2);
-                                user.setSupplement3(vit3);
-                            }
+                            ID2 += "Y";
                         } else if (triple_p2.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4("Vegan Collagen");
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4("Vegan Collagen");
-                                user.setSupplement3("Grape Seeds");
-                            } else {
-                                user.setSupplement4("Vegan Collagen");
-                                user.setSupplement2("Grape Seeds");
-                                user.setSupplement3("Acerola");
-                            }
+                            ID2 += "X";
                         } else if (triple_p3.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4("Beer Yeast");
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4("Beer Yeast");
-                                user.setSupplement3("Zinc");
-                            } else {
-                                user.setSupplement4("Beer Yeast");
-                                user.setSupplement2("Zinc");
-                                user.setSupplement3("Burdock Root");
-                            }
+                            ID2 += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
+                        }
+                        index = search(databaselist, ID2, user);
+                        if (seek2.getProgress() == 1) {
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else if (seek2.getProgress() == 2) {
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else {
+                            user.setSupplement2(databaselist.get(index)[3]);
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
                         }
                     }
                     count++;
                 } if (bundle.getBoolean(ToDoProblemList.DETOX)) {
+                    db.insertProblemTask(ToDoProblemList.DETOX);
                     RadioButton triple_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem1);
                     RadioButton triple_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem2);
                     RadioButton triple_p3 = (RadioButton) array.get(count).getView().findViewById(R.id.triple_problem3);
                     if (count == 0) {
+                        ID += "007";
                         user.setProblem(ToDoProblemList.DETOX);
-                        db.insertProblemTask(ToDoProblemList.DETOX);
                         if (triple_p1.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1("Chlorella");
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1("Chlorella");
-                                user.setSupplement2("Amalaki");
-                            } else {
-                                user.setSupplement1("Chlorella");
-                                user.setSupplement2("Amalaki");
-                                user.setSupplement3("Grapefruit Seeds");
-                            }
+                            ID += "Y";
                         } else if (triple_p2.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1("Desmodium");
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1("Desmodium");
-                                user.setSupplement2("Chrysanthellum");
-                            } else {
-                                user.setSupplement1("Desmodium");
-                                user.setSupplement2("Chrysanthellum");
-                                user.setSupplement3("Milk Thistle");
-                            }
+                            ID += "X";
                         } else if (triple_p3.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1("Fennel");
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1("Fennel");
-                                user.setSupplement2("Rosmary");
-                            } else {
-                                user.setSupplement1("Fennel");
-                                user.setSupplement2("Rosmary");
-                                user.setSupplement3("Peppermint");
-                            }
+                            ID += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
                         }
+                        index = search(databaselist, ID, user);
+                        user.setSupplement1(databaselist.get(index)[1]);
+                        user.setSupplement2(databaselist.get(index)[2]);
+                        user.setSupplement3(databaselist.get(index)[3]);
                     } else {
+                        ID2 += "007";
                         user.setProblem2(ToDoProblemList.DETOX);
-                        db.insertProblemTask(ToDoProblemList.DETOX);
                         if (triple_p1.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4("Chlorella");
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4("Chlorella");
-                                user.setSupplement3("Amalaki");
-                            } else {
-                                user.setSupplement4("Chlorella");
-                                user.setSupplement2("Amalaki");
-                                user.setSupplement3("Grapefruit Seeds");
-                            }
+                            ID2 += "Y";
                         } else if (triple_p2.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4("Desmodium");
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4("Desmodium");
-                                user.setSupplement3("Chrysanthellum");
-                            } else {
-                                user.setSupplement4("Desmodium");
-                                user.setSupplement2("Chrysanthellum");
-                                user.setSupplement3("Milk Thistle");
-                            }
+                            ID2 += "X";
                         } else if (triple_p3.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4("Fennel");
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4("Fennel");
-                                user.setSupplement3("Rosmary");
-                            } else {
-                                user.setSupplement4("Fennel");
-                                user.setSupplement2("Rosmary");
-                                user.setSupplement3("Peppermint");
-                            }
+                            ID2 += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
+                        }
+                        index = search(databaselist, ID2, user);
+                        if (seek2.getProgress() == 1) {
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else if (seek2.getProgress() == 2) {
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else {
+                            user.setSupplement2(databaselist.get(index)[3]);
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
                         }
                     }
                     count++;
                 } if (bundle.getBoolean(ToDoProblemList.EXERCISE)) {
+                    db.insertProblemTask(ToDoProblemList.EXERCISE);
                     RadioButton double_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem2);
                     if (count == 0) {
+                        ID += "006";
                         user.setProblem(ToDoProblemList.EXERCISE);
-                        db.insertProblemTask(ToDoProblemList.EXERCISE);
                         if (double_p1.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1("L-Carnitine");
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1("L-Carnitine");
-                                user.setSupplement2("Creatine");
-                            } else {
-                                user.setSupplement1("L-Carnitine");
-                                user.setSupplement2("Creatine");
-                                user.setSupplement3("Warana");
-                            }
+                            ID += "Y";
                         } else if (double_p2.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1("BCAA");
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1("BCAA");
-                                user.setSupplement2("Coenzyme Q10");
-                            } else {
-                                user.setSupplement1("BCAA");
-                                user.setSupplement2("Coenzyme Q10");
-                                user.setSupplement3("Glutamine");
-                            }
+                            ID += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
                         }
+                        index = search(databaselist, ID, user);
+                        user.setSupplement1(databaselist.get(index)[1]);
+                        user.setSupplement2(databaselist.get(index)[2]);
+                        user.setSupplement3(databaselist.get(index)[3]);
                     } else {
+                        ID2 += "006";
                         user.setProblem2(ToDoProblemList.EXERCISE);
-                        db.insertProblemTask(ToDoProblemList.EXERCISE);
                         if (double_p1.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4("L-Carnitine");
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4("L-Carnitine");
-                                user.setSupplement3("Creatine");
-                            } else {
-                                user.setSupplement4("L-Carnitine");
-                                user.setSupplement2("Creatine");
-                                user.setSupplement3("Warana");
-                            }
+                            ID2 += "Y";
                         } else if (double_p2.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4("BCAA");
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4("BCAA");
-                                user.setSupplement3("Coenzyme Q10");
-                            } else {
-                                user.setSupplement4("BCAA");
-                                user.setSupplement2("Coenzyme Q10");
-                                user.setSupplement3("Glutamine");
-                            }
+                            ID2 += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
+                        }
+                        index = search(databaselist, ID2, user);
+                        if (seek2.getProgress() == 1) {
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else if (seek2.getProgress() == 2) {
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else {
+                            user.setSupplement2(databaselist.get(index)[3]);
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
                         }
                     }
                     count++;
                 } if (bundle.getBoolean(ToDoProblemList.DIGESTION)) {
+                    db.insertProblemTask(ToDoProblemList.DIGESTION);
                     RadioButton double_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem2);
-                    if (double_p1.isChecked()) {
-                        if (!age.equals("20-60")) {
-                            vit1 = "Fennel";
-                            vit2 = "Coriander";
-                            vit3 = "Propolis";
-                        } else {
-                            vit1 = "Fennel";
-                            vit2 = "Coriander";
-                            vit3 = "Propolis";
-                        }
-                    }
                     if (count == 0) {
+                        ID += "008";
                         user.setProblem(ToDoProblemList.DIGESTION);
-                        db.insertProblemTask(ToDoProblemList.DIGESTION);
                         if (double_p1.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1(vit1);
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1(vit1);
-                                user.setSupplement2(vit2);
-                            } else {
-                                user.setSupplement1(vit1);
-                                user.setSupplement2(vit2);
-                                user.setSupplement3(vit3);
-                            }
+                            ID += "Y";
                         } else if (double_p2.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1("Lithothamne");
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1("Lithothamne");
-                                user.setSupplement2("Bromelain");
-                            } else {
-                                user.setSupplement1("Lithothamne");
-                                user.setSupplement2("Bromelain");
-                                user.setSupplement3("Cardamom");
-                            }
+                            ID += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
                         }
+                        index = search(databaselist, ID, user);
+                        user.setSupplement1(databaselist.get(index)[1]);
+                        user.setSupplement2(databaselist.get(index)[2]);
+                        user.setSupplement3(databaselist.get(index)[3]);
                     } else {
+                        ID2 += "008";
                         user.setProblem2(ToDoProblemList.DIGESTION);
-                        db.insertProblemTask(ToDoProblemList.DIGESTION);
                         if (double_p1.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4(vit1);
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4(vit1);
-                                user.setSupplement3(vit2);
-                            } else {
-                                user.setSupplement4(vit1);
-                                user.setSupplement2(vit2);
-                                user.setSupplement3(vit3);
-                            }
+                            ID2 += "Y";
                         } else if (double_p2.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4("Lithothamne");
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4("Lithothamne");
-                                user.setSupplement3("Bromelain");
-                            } else {
-                                user.setSupplement4("Lithothamne");
-                                user.setSupplement2("Bromelain");
-                                user.setSupplement3("Cardamom");
-                            }
+                            ID2 += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
+                        }
+                        index = search(databaselist, ID2, user);
+                        if (seek2.getProgress() == 1) {
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else if (seek2.getProgress() == 2) {
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else {
+                            user.setSupplement2(databaselist.get(index)[3]);
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
                         }
                     }
                     count++;
                 } if (bundle.getBoolean(ToDoProblemList.ARTICULATION)) {
+                    db.insertProblemTask(ToDoProblemList.ARTICULATION);
                     RadioButton double_p1 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem1);
                     RadioButton double_p2 = (RadioButton) array.get(count).getView().findViewById(R.id.double_problem2);
-                    if (double_p1.isChecked()) {
-                        if (age.equals("60+")) {
-                            vit1 = "Collagen";
-                            vit2 = "Silica";
-                            vit3 = "Boswellia";
-                        } else if (age.equals("12-20")) {
-                            vit1 = "Boswellia";
-                            vit2 = "Borage";
-                            vit3 = "Fermented Papaya";
-                        } else {
-                            vit3 = "Fermented Papaya";
-                            vit1 = "Boswellia";
-                            vit2 = "Collagen";
-                        }
-                    } else {
-                        if (age.equals("12-20")) {
-                            vit1 = "Glucosamine";
-                            vit2 = "Palmitoylethanolamide";
-                            vit3 = "Black Currant";
-                        } else {
-                            vit1 = "Curcumin";
-                            vit2 = "Palmitoylethanolamide";
-                            vit3 = "Black Currant";
-                        }
-                    }
                     if (count == 0) {
+                        ID += "009";
                         user.setProblem(ToDoProblemList.ARTICULATION);
-                        db.insertProblemTask(ToDoProblemList.ARTICULATION);
                         if (double_p1.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1(vit1);
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1(vit1);
-                                user.setSupplement2(vit2);
-                            } else {
-                                user.setSupplement1(vit1);
-                                user.setSupplement2(vit2);
-                                user.setSupplement3(vit3);
-                            }
+                            ID += "Y";
                         } else if (double_p2.isChecked()) {
-                            if (seek1.getProgress() == 1) {
-                                user.setSupplement1(vit1);
-                            } else if (seek1.getProgress() == 2) {
-                                user.setSupplement1(vit1);
-                                user.setSupplement2(vit2);
-                            } else {
-                                user.setSupplement1(vit1);
-                                user.setSupplement2(vit2);
-                                user.setSupplement3(vit3);
-                            }
+                            ID += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
                         }
+                        index = search(databaselist, ID, user);
+                        user.setSupplement1(databaselist.get(index)[1]);
+                        user.setSupplement2(databaselist.get(index)[2]);
+                        user.setSupplement3(databaselist.get(index)[3]);
                     } else {
+                        ID2 += "009";
                         user.setProblem2(ToDoProblemList.ARTICULATION);
-                        db.insertProblemTask(ToDoProblemList.ARTICULATION);
                         if (double_p1.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4(vit1);
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4(vit1);
-                                user.setSupplement3(vit2);
-                            } else {
-                                user.setSupplement4(vit1);
-                                user.setSupplement2(vit2);
-                                user.setSupplement3(vit3);
-                            }
+                            ID2 += "Y";
                         } else if (double_p2.isChecked()) {
-                            if (seek2.getProgress() == 1) {
-                                user.setSupplement4(vit1);
-                            } else if (seek2.getProgress() == 2) {
-                                user.setSupplement4(vit1);
-                                user.setSupplement3(vit2);
-                            } else {
-                                user.setSupplement4(vit1);
-                                user.setSupplement2(vit2);
-                                user.setSupplement3(vit3);
-                            }
+                            ID2 += "W";
                         } else {
                             Toast.makeText(v.getContext(),"Must select a problem from the available options",Toast.LENGTH_SHORT).show();
                             check = false;
+                        }
+                        index = search(databaselist, ID2, user);
+                        if (seek2.getProgress() == 1) {
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else if (seek2.getProgress() == 2) {
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
+                        } else {
+                            user.setSupplement2(databaselist.get(index)[3]);
+                            user.setSupplement3(databaselist.get(index)[2]);
+                            user.setSupplement4(databaselist.get(index)[1]);
                         }
                     }
                     count++;
@@ -1228,5 +894,15 @@ public class SurveyDoubleProblemFragment extends Fragment {
             }
             count++;
         }
+    }
+
+    public static int search(ArrayList<String[]> db, String ID, Users user) {
+        int index = -1;
+        for(int i = 0; i < db.size(); i++){
+            if(db.get(i)[0].equals(ID)){
+                return i;
+            }
+        }
+        return -1;
     }
 }

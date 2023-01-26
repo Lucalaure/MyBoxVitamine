@@ -153,8 +153,6 @@ public class SurveySingleProblemFragment extends Fragment {
                 boolean check = true;
                 db.deleteProblemTasks();
 
-                int index;
-
                 // Create ID string to search in database
                 String ID = "";
                 if (gender.equals("Male")) {
@@ -432,14 +430,14 @@ public class SurveySingleProblemFragment extends Fragment {
 
     public static void search(ArrayList<String[]> db, String ID, Users user) {
         int index = -1;
-        for(int i = 0; i < databaselist.size(); i++){
-            if(databaselist.get(i)[0].equals(ID)){
+        for(int i = 0; i < db.size(); i++){
+            if(db.get(i)[0].equals(ID)){
                 index = i;
             }
         }
-        user.setSupplement1(databaselist.get(index)[1]);
-        user.setSupplement2(databaselist.get(index)[2]);
-        user.setSupplement3(databaselist.get(index)[3]);
-        user.setSupplement4(databaselist.get(index)[4]);
+        user.setSupplement1(db.get(index)[1]);
+        user.setSupplement2(db.get(index)[2]);
+        user.setSupplement3(db.get(index)[3]);
+        user.setSupplement4(db.get(index)[4]);
     }
 }
